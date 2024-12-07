@@ -3,7 +3,7 @@ import { InputFormat, OutputFormat, schema } from "./types/types";
 
 
 
-const genAI = new GoogleGenerativeAI(process.env.TOKEN || "");
+const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_TOKEN || "");
 /**
  * Model Instance
  */
@@ -24,7 +24,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash",
  * @param prompt Prompt
  * @returns Result
  */
-export async function GenerateFeedback(prompt: InputFormat) : Promise<OutputFormat> {
+export async function generateFeedback(prompt: InputFormat) : Promise<OutputFormat> {
     const result = await model.generateContent(JSON.stringify(prompt));
     return JSON.parse(result.response.text());
 }

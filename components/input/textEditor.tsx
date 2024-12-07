@@ -1,7 +1,9 @@
 "use client" // This is a client component, but the parent element may not include this
 import { KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
 
-export default function MathTextEditor() : ReactElement {
+
+
+export default function MathTextEditor(props: { onUpdateText?: (arg: string) => void }) : ReactElement {
     const ref = useRef<HTMLCanvasElement>(null);
     const [ text, setText ] = useState("");
 
@@ -29,16 +31,16 @@ export default function MathTextEditor() : ReactElement {
         }
     }
     const handleCanvasClick = () => { if(ref.current) ref.current.focus(); }
-    // const handleRender = () => {
-    //     if(!ref.current) return;
-    //     const canvas: HTMLCanvasElement = ref.current;
-    //     const ctx = canvas.getContext("2d");
-    //     if(ctx) drawText(ctx); // Draws Text
-    // }
 
 
 
+    // Updates Renderer
     useEffect(() => {
+        // Updates Text
+        if(props.onUpdateText) props.onUpdateText(text);
+
+
+        // Render
         if (!ref.current) return;
         const canvas: HTMLCanvasElement = ref.current;
         const ctx = canvas.getContext("2d");
