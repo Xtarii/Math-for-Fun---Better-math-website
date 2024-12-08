@@ -1,53 +1,32 @@
 "use client"; // To use states
-import MathTextEditor from "@/components/input/textEditor";
-import { generateFeedback } from "@/utils/api/gemini";
-import { ReactElement, useState } from "react";
-
-import json from "@/DEBUG.json"
-import SubmitPanel from "@/components/submit/panel";
+import LoadingWheel from "@/components/loading/wheel";
+import { getChapters } from "@/utils/supabase/supabase";
+import { ReactElement, useEffect, useState } from "react";
 
 
 
 export default function Chapters() : ReactElement {
-    const [ text, updateText ] = useState("");
-    const [ score, setScore ] = useState<number>(0);
+    const [ load, setLoad ] = useState(true);
+    const [ chapters, setChapters ] = useState<{ id: string, name: string }[]>();
+
+
+    // Fetches Chapter Data
+    useEffect(() => {
+        (async () => {
+            setChapters(await getChapters()) // Loads Chapters
+            setLoad(false); // Stops Loading Wheel
+        })();
+    }, []);
 
 
 
     return (<div>
-        {/* DEBUG */}
-        <MathTextEditor onUpdateText={updateText} />
-
-        {/* Submit Panel : DEBUG */}
-        <SubmitPanel status={score} onClick={e => {
-            e.preventDefault();
+        {load && <LoadingWheel />}
 
 
-
-            // Test Generation of Feedback
-            const q = 0;
-            const flags: string[] = [
-                "{user} ska stämma överens med {system.answer}"
-            ]
-            for(const str of json["MA3c 4"][q].flags) { flags.push(str); }
-
-
-            generateFeedback({
-                system: { // DEBUG Question
-                    question: json["MA3c 4"][q].question,
-                    answer: json["MA3c 4"][q].answer,
-
-                    flags
-                },
-
-                user: text
-            }).then((data) => {
-                console.log(data);
-
-
-                setScore(data.score * 10); // Sets Score
-            });
-
-        }} />
+        {/* Page Content */}
+        {chapters?.map((value, index) => <div key={index}>
+            <p><a href={`/chapters/${value.name}`}>{value.name}</a></p>
+        </div>)}
     </div>);
 }

@@ -1,26 +1,38 @@
 "use client";
 import { useParams } from "next/navigation";
-import { ReactElement } from "react";
-
-import json from "@/DEBUG.json"; // DEBUG for questions
+import { ReactElement, useEffect, useState } from "react";
+import LoadingWheel from "@/components/loading/wheel";
+import { getChapterContent } from "@/utils/supabase/supabase";
 
 
 
 export default function Content() : ReactElement {
     const params = useParams();
-    const c = params.chap; // The Chapter to Get content from
+    const chap = params.chap?.toString().replace("%20", " ") || "MA1a 1"; // The Chapter to Get content from
+
+    // States
+    const [ load, setLoad ] = useState(true);
+    const [ content, setContent ] = useState<{ id: string, question: string }[]>();
 
 
-    // DEBUG
-    const chap: "MA3c 4" | "MA3c 3" = "MA3c 3";
-    const content = json[chap];
+    // Fetches Chapter Data
+    useEffect(() => {
+        (async () => {
+            setContent(await getChapterContent(chap));
+            setLoad(false); // Stops Loading Wheel
+        })();
+    }, []);
 
 
 
     // Chapter Content Page
     return(<div>
-        {content.map((value, index) => <div key={index}>
-            <a href={`/chapters/${chap}/${index}/`} key={index}>{value.question}</a>
+        {load && <LoadingWheel />}
+
+
+        {/* Actual Site Content */}
+        {content?.map((value, index) => <div key={index}>
+            <a href={`/chapters/${chap}/${value.id}/`} key={index}>{value.question}</a>
         </div>)}
     </div>);
 }
