@@ -9,7 +9,7 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
 
 
     // Panel Object
-    return(<div className="flex flex-wrap w-96">
+    return(<div className="flex flex-wrap w-96 m-auto">
         {/* Controls */}
         <div className="w-full flex justify-center">
             <button

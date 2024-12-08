@@ -7,6 +7,7 @@ import { generateFeedback } from "@/utils/api/gemini";
 import LoadingWheel from "@/components/loading/wheel";
 import { getQuestion } from "@/utils/supabase/supabase";
 import { QuestionType } from "@/utils/supabase/types/types";
+import ErrorMessage from "@/components/errors/message";
 
 
 
@@ -42,52 +43,50 @@ export default function Question() : ReactElement {
 
 
         {/* Content */}
-        {content && <div>
-            {/* Site Content */}
-            <p>{content.question}</p>
+        {content && <div className="flex w-screen">
+            <div className="flex flex-wrap w-3/5 h-screen">
+                {/* Site Content */}
+                <p className="text-lg text-center w-full h-16">{content.question}</p>
 
-            {/* DEBUG */}
+                {/* Submit Panel : DEBUG */}
+                <SubmitPanel status={score} onClick={e => {
+                    e.preventDefault();
+                    setLoad(true); // Starts Spinning Wheel
+
+
+
+                    // Test Generation of Feedback
+                    generateFeedback({
+                        system: { // DEBUG Question
+                            question: content.question,
+                            answer: content.answer,
+
+                            flags: content.flags
+                        },
+
+                        user: text
+                    }).then((data) => {
+                        setScore(data.score * 10); // Sets Score
+                        setMessage(data.feedback);
+                        setLoad(false); // Stops Spinning Wheel
+                    });
+                }} />
+
+
+
+                {/* DEBUG Message */}
+                {message && <div className="absolute bottom-2 right-2 flex w-fit h-16 bg-sky-900 rounded">
+                    <p className="m-auto pl-8 pr-8">
+                        {message}
+                    </p>
+                </div>}
+            </div>
             <MathTextEditor onUpdateText={updateText} />
-
-            {/* Submit Panel : DEBUG */}
-            <SubmitPanel status={score} onClick={e => {
-                e.preventDefault();
-                setLoad(true); // Starts Spinning Wheel
-
-
-
-                // Test Generation of Feedback
-                generateFeedback({
-                    system: { // DEBUG Question
-                        question: content.question,
-                        answer: content.answer,
-
-                        flags: content.flags
-                    },
-
-                    user: text
-                }).then((data) => {
-                    setScore(data.score * 10); // Sets Score
-                    setMessage(data.feedback);
-                    setLoad(false); // Stops Spinning Wheel
-                });
-            }} />
-
-
-
-            {/* DEBUG Message */}
-            {message && <p>
-                {message}
-            </p>}
         </div>}
-
-
 
 
 
         {/* Error */}
-        {!content && <div>
-            <p>Error, No such question</p>
-        </div>}
+        {(!content && !load) && <ErrorMessage title="No such question!" message="The question was not found" />}
     </div>);
 }

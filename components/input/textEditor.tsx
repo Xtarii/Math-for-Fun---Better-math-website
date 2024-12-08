@@ -9,8 +9,9 @@ export default function MathTextEditor(props: { onUpdateText?: (arg: string) => 
 
 
 
-    const drawText = (ctx: CanvasRenderingContext2D) => {
+    const drawText = (ctx: CanvasRenderingContext2D, scale: number) => {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.scale(scale, scale); // Sets context size to minimize blur
         ctx.font = "16px Arial";
         ctx.fillStyle = "white";
         ctx.fillText(text, 10, 30);
@@ -44,17 +45,26 @@ export default function MathTextEditor(props: { onUpdateText?: (arg: string) => 
         if (!ref.current) return;
         const canvas: HTMLCanvasElement = ref.current;
         const ctx = canvas.getContext("2d");
-        if (ctx) drawText(ctx); // Draw text on canvas whenever `text` changes
+
+        // Canvas Scale
+        const scale = window.devicePixelRatio || 1;
+        const width = canvas.offsetWidth;
+        const height = canvas.offsetHeight;
+        canvas.width = width * scale;
+        canvas.height = height * scale;
+
+
+        if (ctx) drawText(ctx, scale); // Draw text on canvas whenever `text` changes
     }, [text]);
 
 
 
-    return(<div>
+    return(<div className="h-screen w-2/5 absolute right-0">
         <canvas
             ref={ref}
             tabIndex={0}
 
-            className="border-solid border-2 border-sky-500"
+            className="border-solid border-l-2 border-gray-500 w-full h-full"
 
 
             // Events
