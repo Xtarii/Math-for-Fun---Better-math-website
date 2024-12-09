@@ -6,6 +6,10 @@ export type QuestionType = {
      * Question ID
      */
     id: string
+    /**
+     * Question Number
+     */
+    number: number
 
 
     /**

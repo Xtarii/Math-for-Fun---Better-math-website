@@ -43,12 +43,12 @@ export async function getChapters() : Promise<ChapterType[]> {
  * @param chapter Chapter Name
  * @returns Chapter Content
  */
-export async function getChapterContent(chapter: string) : Promise<{ id: string, question: string }[]> {
-    const { data, error } = await client.from(chapter).select("id,question");
+export async function getChapterContent(chapter: string) : Promise<{ id: string, number: number, difficulty: number }[]> {
+    const { data, error } = await client.from(chapter).select("id,number,difficulty");
     if(error) console.error(error); // DEBUG Error
 
     // Converts Data
-    const converted: { id: string, question: string }[] = data || [];
+    const converted: { id: string, number: number, difficulty: number }[] = data || [];
     return converted;
 }
 
