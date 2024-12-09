@@ -1,6 +1,6 @@
 /**
  * Gemini Input Flags
- * hello
+ * goodbye
  */
 export const Flags: string[] = [
     "{user} ska stämma överens med {system.answer}",
