@@ -46,7 +46,10 @@ export default function Question() : ReactElement {
         {content && <div className="flex w-screen">
             <div className="flex flex-wrap w-3/5 h-screen">
                 {/* Site Content */}
-                <p className="text-lg text-center w-full h-16">{content.question}</p>
+                <div className="flex flex-wrap">
+                    <p className="text-lg text-center w-full h-16">{content.question}</p>
+                    {content.image && <img className="m-auto w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
+                </div>
 
                 {/* Submit Panel : DEBUG */}
                 <SubmitPanel status={score} onClick={e => {
