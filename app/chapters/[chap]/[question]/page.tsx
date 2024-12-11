@@ -8,6 +8,7 @@ import LoadingWheel from "@/components/loading/wheel";
 import { getQuestion } from "@/utils/supabase/supabase";
 import { QuestionType } from "@/utils/supabase/types/types";
 import ErrorMessage from "@/components/errors/message";
+import GeoGebra from "@/components/geogebra/geogebra";
 
 
 
@@ -19,6 +20,7 @@ export default function Question() : ReactElement {
     // States
     const [ load, setLoad ] = useState(true);
     const [ content, setContent ] = useState<QuestionType>();
+    const [ contentText, setContentText ] = useState<string[]>();
 
     const [ text, updateText ] = useState("");
     const [ score, setScore ] = useState<number>(0);
@@ -31,6 +33,13 @@ export default function Question() : ReactElement {
         (async () => {
             const res = await getQuestion(chap, question);
             setContent(res || undefined);
+
+            // Parses the question text
+            const format: string[] = [];
+            for(const part of res?.question.split("\n") || []) {
+                format.push(part || " ");
+            }
+            setContentText(format);
             setLoad(false);
         })();
     }, [question]);
@@ -46,8 +55,12 @@ export default function Question() : ReactElement {
         {content && <div className="flex w-screen">
             <div className="flex flex-wrap w-3/5 h-screen">
                 {/* Site Content */}
-                <div className="flex flex-wrap">
-                    <p className="text-lg text-center w-full h-16">{content.question}</p>
+                <div className="flex mt-4">
+                    <div className="ml-4 flex flex-wrap h-full">
+                        {contentText?.map((value, index) =>
+                            <p className="text-lg text-left w-full" key={index}>{value}</p>
+                        )}
+                    </div>
                     {content.image && <img className="m-auto w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
                 </div>
 
@@ -84,7 +97,11 @@ export default function Question() : ReactElement {
                     </p>
                 </div>}
             </div>
-            <MathTextEditor onUpdateText={updateText} />
+
+            <div className="absolute right-0 h-screen w-2/5">
+                <MathTextEditor className="h-2/4 w-full" onUpdateText={updateText} />
+                <GeoGebra className="h-2/4 w-full" />
+            </div>
         </div>}
 
 

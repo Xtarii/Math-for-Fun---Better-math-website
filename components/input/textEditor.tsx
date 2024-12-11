@@ -4,9 +4,12 @@ import MathCanvas from "./canvas/mathCanvas";
 
 
 
-export default function MathTextEditor(props: { onUpdateText?: (arg: string) => void }) : ReactElement {
+/**
+ * Math Text Editor Element
+ */
+export default function MathTextEditor(props: { className?: string, onUpdateText?: (arg: string) => void }) : ReactElement {
     // Editor Body
-    return(<div className="h-screen w-2/5 absolute right-0">
+    return(<div className={props.className}>
         <MathCanvas
             className="border-solid border-l-2 border-gray-500 w-full h-full"
             onTextChange={props.onUpdateText}
