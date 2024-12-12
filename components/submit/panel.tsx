@@ -36,7 +36,7 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
 
         {/* Score Bar */}
         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-            <div className="h-2.5 rounded-full" style={{
+            <div className="h-2.5 rounded-full transition-all duration-700 ease-in-out" style={{
                 width: `${props.status}%`,
                 backgroundColor: color,
 

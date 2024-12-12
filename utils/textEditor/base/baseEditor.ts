@@ -36,6 +36,10 @@ export default abstract class BaseEditor {
      * Is canvas on focus
      */
     protected isFocused = false;
+    /**
+     * Canvas background color
+     */
+    protected backgroundColor: string = "#2a2e35";
 
 
 
@@ -143,7 +147,13 @@ export default abstract class BaseEditor {
     protected render() : void {
         // Context and render setup
         this.setScale();
+        this.context?.reset();
         this.context?.clearRect(0, 0, this.canvas.width, this.canvas.height); // Clears context
+
+        // Background color
+        if(this.context) this.context.fillStyle = this.backgroundColor; // Fill Color
+        this.context?.fillRect(0, 0, this.canvas.width, this.canvas.height); // Fills background
+
 
         // Default render
         if(this.text.length == 1 && this.text[0] == "")

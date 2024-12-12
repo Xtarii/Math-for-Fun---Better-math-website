@@ -11,7 +11,7 @@ export default function MathTextEditor(props: { className?: string, onUpdateText
     // Editor Body
     return(<div className={props.className}>
         <MathCanvas
-            className="border-solid border-l-2 border-gray-500 w-full h-full"
+            className="border-solid border-b-2 border-slate-500 w-full h-full"
             onTextChange={props.onUpdateText}
         />
     </div>);

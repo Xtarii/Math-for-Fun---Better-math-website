@@ -103,7 +103,7 @@ export default function Question() : ReactElement {
                 </div>}
             </div>
 
-            <div className="absolute right-0 h-screen w-2/5">
+            <div className="bg-grayish absolute right-0 h-screen w-2/5 border-solid border-l-2 border-slate-500">
                 <MathTextEditor className="h-2/4 w-full" onUpdateText={updateText} />
                 <GeoGebra className="h-2/4 w-full" />
             </div>
