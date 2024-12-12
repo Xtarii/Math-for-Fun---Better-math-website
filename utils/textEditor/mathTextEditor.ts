@@ -77,25 +77,15 @@ export default class MathTextEditorManager extends BaseEditor {
 
 
     public render() : void {
-        this.setScale();
-        this.context?.clearRect(0, 0, this.canvas.width, this.canvas.height); // Clears context
+        super.render(); // DEFAULT Rendering
 
         // Renders Text
-        // const text = [...this.handlers.text];
         for(var line = 0; line < this.text.length; line++) this.drawLine(this.text[line], line);
         if(this.isFocused) this.drawMouse();
     }
 
 
 
-    public drawText(text: string, y: number): void {
-        if(!this.context) return;
-
-        // Draws Text
-        this.context.font = `${this.characterSize}px Arial`;
-        this.context.fillStyle = "white";
-        this.context.fillText(text, 10, y);
-    }
 
 
     public drawLine(text: string, line: number) : void {

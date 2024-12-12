@@ -41,14 +41,24 @@ export default function Content() : ReactElement {
         {/* Actual Site Content */}
         {content && Object.values(content).map((value, index) => <div key={index}>
             <div className="w-24" key={index}>
-                <div className="h-8 bg-blue-500 rounded">
-                    <p className="text-center">Level: {Object.keys(content)[index]}</p>
+                <div className="w-96 h-8 bg-slate-700 rounded">
+                    <p className="text-center text-2xl">Level: {Object.keys(content)[index]}</p>
                 </div>
 
 
-                {value.map((value, index) => <div className="flex" key={index}>
-                    <a href={`/chapters/${chap}/${value.id}/`} key={index}>Upg. {value.number}</a>
-                    <p className="m-auto justify-self-right">{value.difficulty}</p>
+                {value.map((value, index) => <div className="flex w-96 bg-slate-800 h-16 rounded hover:bg-slate-500" key={index}>
+                    <a href={`/chapters/${chap}/${value.id}/`} className="flex w-full h-full">
+                        <div className="m-auto ml-4">
+                            <p>Upg. {value.number}</p>
+                        </div>
+
+                        <div className="m-auto mr-4 justify-self-right rounded-full size-7 flex shadow" style={{
+                            backgroundColor: value.difficulty === 1 ? "lime" :
+                            value.difficulty === 2 ? "blue" : value.difficulty < 4 ? "pink" : "darkviolet"
+                        }}>
+                            <p className="m-auto text-center text-gray-900">{value.difficulty}</p>
+                        </div>
+                    </a>
                 </div>)}
             </div>
         </div>)}

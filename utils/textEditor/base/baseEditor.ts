@@ -140,7 +140,34 @@ export default abstract class BaseEditor {
      *
      * Updates the content of the canvas
      */
-    protected render() : void {}
+    protected render() : void {
+        // Context and render setup
+        this.setScale();
+        this.context?.clearRect(0, 0, this.canvas.width, this.canvas.height); // Clears context
+
+        // Default render
+        if(this.text.length == 1 && this.text[0] == "")
+            this.drawText("Skriv här...", this.mouseColor, 10, this.characterSize + 4);
+    }
+
+
+
+    /**
+     * Draws text on the context
+     *
+     * @param text Text
+     * @param color Text color
+     * @param x Position x
+     * @param y Position y
+     */
+    public drawText(text: string, color: string, x: number, y: number): void {
+        if(!this.context) return;
+
+        // Draws Text
+        this.context.font = `${this.characterSize}px Arial`;
+        this.context.fillStyle = color;
+        this.context.fillText(text, x, y);
+    }
 
 
 

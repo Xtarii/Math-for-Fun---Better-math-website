@@ -53,15 +53,20 @@ export default function Question() : ReactElement {
 
         {/* Content */}
         {content && <div className="flex w-screen">
-            <div className="flex flex-wrap w-3/5 h-screen">
+            <div className="relative flex flex-wrap w-3/5 h-screen">
                 {/* Site Content */}
-                <div className="flex mt-4">
-                    <div className="ml-4 flex flex-wrap h-full">
+                <div className="flex mt-4 w-full">
+                    <div className="ml-4">
                         {contentText?.map((value, index) =>
-                            <p className="text-lg text-left w-full" key={index}>{value}</p>
+                            <div className="h-fit min-h-8" key={index}>
+                                <p className="text-lg text-left w-full" key={index}>{value}</p>
+                            </div>
                         )}
                     </div>
-                    {content.image && <img className="m-auto w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
+
+                    <div className="flex m-auto mt-4">
+                        {content.image && <img className="m-auto mt-0 w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
+                    </div>
                 </div>
 
                 {/* Submit Panel : DEBUG */}
