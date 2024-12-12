@@ -54,6 +54,11 @@ export default class MathTextEditorManager extends BaseEditor {
             this.insertString(event.key, this.position.x, this.position.line);
             this.moveCursorRight(1);
         }
+        if(!event.ctrlKey && event.key.startsWith("^")) {
+            // To the power of inputs
+            this.insertString(event.key, this.position.x, this.position.line);
+            this.moveCursorRight(event.key.length);
+        }
 
         // New Line
         if(event.key === "Enter") this.insertNewLine(this.position.x, this.position.line);
