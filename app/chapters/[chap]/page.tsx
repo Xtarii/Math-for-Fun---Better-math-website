@@ -53,8 +53,9 @@ export default function Content() : ReactElement {
                         </div>
 
                         <div className="m-auto mr-4 justify-self-right rounded-full size-7 flex shadow" style={{
-                            backgroundColor: value.difficulty === 1 ? "lime" :
-                            value.difficulty === 2 ? "blue" : value.difficulty < 4 ? "pink" : "darkviolet"
+                            backgroundColor: value.difficulty === 1 ? "#00B4A3" :
+                            value.difficulty === 2 ? "#00CC99" :
+                            value.difficulty === 3 ? "#008080" : "#603990"
                         }}>
                             <p className="m-auto text-center text-gray-900">{value.difficulty}</p>
                         </div>
