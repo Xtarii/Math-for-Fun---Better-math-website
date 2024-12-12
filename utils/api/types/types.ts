@@ -10,7 +10,7 @@ export const schema: ResponseSchema = {
     properties: {
         score: {
             type: SchemaType.NUMBER,
-            description: "A value between 0 - 10 of how good the {userInput} is",
+            description: "A value between 1.0 - 10.0 of how good the {userInput} is",
             nullable: false,
         },
         feedback: {
