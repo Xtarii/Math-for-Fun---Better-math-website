@@ -70,7 +70,7 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
                         const question = questions[randomQuestion];
 
                         // Checks if question is not current and not to difficult
-                        if(question.difficulty < (data?.difficulty || 2) + 3 && question.id != data?.id) {
+                        if(question.difficulty > (data?.difficulty || 2) - 3 && question.difficulty < (data?.difficulty || 2) + 3 && question.id != data?.id) {
                             router.push(`/chapters/${chap}/${question.id}/`);
                             break;
                         }

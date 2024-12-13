@@ -65,7 +65,17 @@ export default function Question() : ReactElement {
                     </div>
 
                     <div className="flex m-auto mt-4">
-                        {content.image && <img className="m-auto mt-0 w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
+                        <div className="absolute right-2 top-2 flex w-40">
+                            <p className="m-auto ml-4">Upg. {content.number}</p>
+                            <div className="m-auto mr-4 justify-self-right rounded-full size-7 flex shadow" style={{
+                                backgroundColor: content.difficulty === 1 ? "#00B4A3" :
+                                content.difficulty === 2 ? "#00CC99" :
+                                content.difficulty === 3 ? "#008080" : "#603990"
+                            }}>
+                                <p className="m-auto text-lg text-center text-gray-900">{content.difficulty}</p>
+                            </div>
+                        </div>
+                        {content.image && <img className="m-auto mt-4 w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
                     </div>
                 </div>
 
