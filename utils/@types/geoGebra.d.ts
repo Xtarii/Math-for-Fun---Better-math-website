@@ -3,6 +3,9 @@ declare global {
         /**
          * GeoGebra constructor
          */
-        GGBApplet: any;
+        GGBApplet?: any;
     }
 }
+
+
+export {};

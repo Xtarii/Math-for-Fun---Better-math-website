@@ -13,7 +13,7 @@ export default function GeoGebra(props: { className?: string }) : ReactElement {
 
         // Appends GeoGebra on script load
         script.onload = () => {
-            if(typeof window === "undefined" && !window.GGBApplet) return;
+            if(typeof window === "undefined" || !window.GGBApplet) return;
             const params = { // GeoGebra parameters
                 name: "graphing",
                 showToolbar: true,
