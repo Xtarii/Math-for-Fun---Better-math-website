@@ -70,39 +70,44 @@ export default function Question() : ReactElement {
                 </div>
 
                 {/* Submit Panel : DEBUG */}
-                <SubmitPanel status={score} onClick={e => {
-                    e.preventDefault();
-                    setLoad(true); // Starts Spinning Wheel
+                <div className="w-full h-40 absolute bottom-0 left-0 bg-slate-800 m-auto flex border-t-8 border-slate-500">
+                    <SubmitPanel status={score} onClick={e => {
+                        e.preventDefault();
+                        setLoad(true); // Starts Spinning Wheel
 
 
 
-                    // Test Generation of Feedback
-                    generateFeedback({
-                        system: { // DEBUG Question
-                            question: content.question,
-                            answer: content.answer,
+                        // Test Generation of Feedback
+                        generateFeedback({
+                            system: { // DEBUG Question
+                                question: content.question,
+                                answer: content.answer,
 
-                            flags: content.flags
-                        },
+                                flags: content.flags
+                            },
 
-                        user: text
-                    }).then((data) => {
-                        setScore(data.score * 10); // Sets Score
-                        setMessage(data.feedback);
-                        setLoad(false); // Stops Spinning Wheel
-                    });
-                }} />
+                            user: text
+                        }).then((data) => {
+                            setScore(data.score * 10); // Sets Score
+                            setMessage(data.feedback);
+                            setLoad(false); // Stops Spinning Wheel
+                        });
+                    }} />
+                </div>
 
 
 
                 {/* DEBUG Message */}
-                {message && <div className="absolute bottom-2 right-2 flex w-fit h-16 bg-sky-900 rounded">
-                    <p className="m-auto pl-8 pr-8">
+                {message && <div className="absolute bottom-2 right-2 flex w-fit max-w-96 min-h-16 bg-sky-900 rounded border border-2xl hover:opacity-20">
+                    <p className="m-auto p-10 pl-8 pr-8">
                         {message}
                     </p>
                 </div>}
             </div>
 
+
+
+            {/* Tool bar */}
             <div className="bg-grayish absolute right-0 h-screen w-2/5 border-solid border-l-2 border-slate-500">
                 <MathTextEditor className="h-2/4 w-full" onUpdateText={updateText} />
                 <GeoGebra className="h-2/4 w-full" />

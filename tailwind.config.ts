@@ -14,6 +14,11 @@ export default {
 
         "slate-variant": "#0F1F25",
         "grayish": "#2a2e35",
+
+        "blue-var": "#1181c4",
+        "blue-var-hover": "#0d6091",
+        "blu-var2": "#72c2f2",
+        "blue-var3": "#4d64f4",
       },
     },
   },
