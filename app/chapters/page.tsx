@@ -20,7 +20,7 @@ export default function Chapters() : ReactElement {
 
 
 
-    return (<div>
+    return (<div className="min-h-screen">
         {load && <LoadingWheel />}
 
 

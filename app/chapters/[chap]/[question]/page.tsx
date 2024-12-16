@@ -52,7 +52,7 @@ export default function Question() : ReactElement {
 
 
     // Question Content Page
-    return(<div>
+    return(<div className="min-h-screen">
         {load && <LoadingWheel />}
 
 

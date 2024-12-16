@@ -39,7 +39,7 @@ export default function Content() : ReactElement {
 
 
     // Chapter Content Page
-    return(<div>
+    return(<div className="min-h-screen">
         {load && <LoadingWheel />}
 
 
