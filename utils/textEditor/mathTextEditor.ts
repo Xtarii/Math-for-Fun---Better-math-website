@@ -77,11 +77,27 @@ export default class MathTextEditorManager extends BaseEditor {
 
 
     public drawLine(text: string, line: number) : void {
+        let x = 10; // Start x position
+        const y = line * this.characterSize; // Start y position
         if(!this.context) return;
 
-        // Draws Line
+        // Draws Line Setup
         this.context.font = `${this.characterSize}px Arial`;
         this.context.fillStyle = "white";
-        this.context.fillText(text, 10, (this.characterSize + 4) + line * this.characterSize);
+
+        // Parsing and drawing content
+        // for(let i = 0; i < text.length; i++) {
+        //     const char = text[i]; // Current character
+
+        //     // Power-off parsing
+        //     if(char === "^") {
+        //     }
+
+        //     // Appends width
+        //     x += this.context.measureText(char).width;
+        //     this.drawText(char, "white", x, (this.characterSize + 4) + y);
+        // }
+
+        this.context.fillText(text, x, (this.characterSize + 4) + y);
     }
 }
