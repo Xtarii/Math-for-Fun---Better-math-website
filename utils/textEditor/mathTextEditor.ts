@@ -55,9 +55,13 @@ export default class MathTextEditorManager extends BaseEditor {
             this.moveCursorRight(1);
         }
         if(!event.ctrlKey && event.key.startsWith("^")) {
-            // To the power of inputs
-            this.insertString(event.key, this.position.x, this.position.line);
-            this.moveCursorRight(event.key.length);
+            let str = "^"; // Formatter string
+            if(event.key[1] !== "(") str += "(";
+            str += event.key.slice(1, event.key.length) + ")"; // Appends the input with end parentheses
+
+            // Appends to text
+            this.insertString(str, this.position.x, this.position.line);
+            this.moveCursorRight(str.length - 1); // Sets mouse position to be before the end parentheses
         }
 
         // New Line
