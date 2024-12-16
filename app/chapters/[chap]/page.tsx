@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
 import LoadingWheel from "@/components/loading/wheel";
 import { getChapterContent } from "@/utils/supabase/supabase";
+import { title } from "@/utils/config";
 
 
 
@@ -17,6 +18,10 @@ export default function Content() : ReactElement {
 
     // Fetches Chapter Data
     useEffect(() => {
+        // Title
+        document.title = title + " | " + chap;
+
+        // Content fetching
         (async () => {
             const items = await getChapterContent(chap);
             const sorted: { [key: string]: { id: string, number: number, difficulty: number }[] } = {};
@@ -36,6 +41,22 @@ export default function Content() : ReactElement {
     // Chapter Content Page
     return(<div>
         {load && <LoadingWheel />}
+
+
+        {/* Top Menu */}
+        <div className="w-full h-24 mb-2 bg-slate-500 flex">
+            <a href="/chapters" className="justify-self-left m-auto ml-8 hover:bg-slate-500 hover:opacity-25">
+                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9h13a5 5 0 0 1 0 10H7M3 9l4-4M3 9l4 4"/>
+                </svg>
+            </a>
+
+
+            {/* Menu content */}
+            <div className="h-full flex m-auto ml-8">
+                <h2 className="text-center text-xl m-auto">Kapitel</h2>
+            </div>
+        </div>
 
 
         {/* Actual Site Content */}

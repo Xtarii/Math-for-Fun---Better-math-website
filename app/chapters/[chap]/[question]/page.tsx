@@ -9,6 +9,7 @@ import { getQuestion } from "@/utils/supabase/supabase";
 import { QuestionType } from "@/utils/supabase/types/types";
 import ErrorMessage from "@/components/errors/message";
 import GeoGebra from "@/components/geogebra/geogebra";
+import { title } from "@/utils/config";
 
 
 
@@ -30,6 +31,10 @@ export default function Question() : ReactElement {
 
     // Content Fetch Effect
     useEffect(() => {
+        // Title
+        document.title = title + " | Learn";
+
+        // Content fetching
         (async () => {
             const res = await getQuestion(chap, question);
             setContent(res || undefined);
