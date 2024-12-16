@@ -8,6 +8,24 @@ import BaseEditor from "./base/baseEditor";
  */
 export default class MathTextEditorManager extends BaseEditor {
     /**
+     * Text Sizes for different math inputs
+     */
+    private textSize = {
+        /**
+         * Small size
+         *
+         * used for power of and other
+         * inputs where the input text
+         * is smaller than normal
+         */
+        small: (this.characterSize - this.characterSize / 4)
+    }
+
+
+
+
+
+    /**
      * Creates new Math Editor Instance
      *
      * @param canvas Canvas
@@ -82,22 +100,112 @@ export default class MathTextEditorManager extends BaseEditor {
         if(!this.context) return;
 
         // Draws Line Setup
-        this.context.font = `${this.characterSize}px Arial`;
         this.context.fillStyle = "white";
 
         // Parsing and drawing content
-        // for(let i = 0; i < text.length; i++) {
-        //     const char = text[i]; // Current character
+        for(let i = 0; i < text.length; i++) {
+            const char = text[i]; // Current character
 
-        //     // Power-off parsing
-        //     if(char === "^") {
-        //     }
+            // Power-off parsing
+            if(char === "^") {
+                const parentheses: "("[] = []; // List of parentheses
 
-        //     // Appends width
-        //     x += this.context.measureText(char).width;
-        //     this.drawText(char, "white", x, (this.characterSize + 4) + y);
-        // }
+                // Loops characters but skips "^"
+                for(let ix = i + 1; ix < text.length; ix++) {
+                    const oChar = text[ix];
 
-        this.context.fillText(text, x, (this.characterSize + 4) + y);
+                    if(oChar === "(") {
+                        parentheses.push(oChar);
+                        continue; // Skip parentheses
+                    }
+                    if(oChar === ")") {
+                        parentheses.pop(); // Removes matching parentheses
+                        if(parentheses.length === 0) { // End of parentheses
+                            i = ix;
+                            break;
+                        }
+                        continue; // Skips end parentheses
+                    }
+
+
+                    // Draws character
+                    this.context.font = `${this.textSize.small}px Arial`;
+                    this.context.fillText(oChar, x, (this.textSize.small + 4) + y);
+                    x += this.context.measureText(oChar).width; // Appends character width to x
+                }
+                continue; // Continues without printing character
+            }
+
+            // Draws character
+            this.context.font = `${this.characterSize}px Arial`;
+            this.context.fillText(char, x, (this.characterSize + 4) + y);
+            x += this.context.measureText(char).width; // Appends character width to x
+        }
+    }
+
+
+
+
+
+    public parseParentheses(text: string) : string {
+        return "";
+    }
+
+
+
+
+
+    public drawMouse(): void {
+        let x = 10; // Start position
+        const y = (this.characterSize + 6) + this.position.line * this.characterSize;
+        const yOffset = this.characterSize;
+        let size = this.characterSize;
+        if(!this.context) return; // Returns if there is no canvas, else calculates x position
+
+
+        // Parsing the line for special math inputs
+        for(var i = 0; i < this.position.x; i++) if(this.text[this.position.line][i]) {
+            const char = this.text[this.position.line][i];
+
+            // Power-off parsing
+            if(char === "^") {
+                const parentheses: "("[] = []; // List of parentheses
+
+                // Loops characters but skips "^"
+                for(let ix = i + 1; ix < this.text[this.position.line].length; ix++) {
+                    const oChar = this.text[this.position.line][ix];
+
+                    // Parentheses parsing
+                    if(oChar === "(") {
+                        parentheses.push(oChar);
+                        continue; // Skip parentheses
+                    }
+                    if(oChar === ")") {
+                        parentheses.pop(); // Removes matching parentheses
+                        if(parentheses.length === 0) { // End of parentheses
+                            i = ix;
+                            break;
+                        }
+                        continue; // Skips end parentheses
+                    }
+
+                    // Appends character width to x
+                    this.context.font = `${this.textSize.small}px Arial`;
+                    size = this.textSize.small;
+                    x += this.context.measureText(oChar).width;
+                }
+                continue; // Continues without printing character
+            }
+
+            // Appends text width
+            this.context.font = `${this.characterSize}px Arial`;
+            size = this.characterSize;
+            x += this.context.measureText(char).width;
+        }
+
+
+        // Draws Mouse
+        this.context.fillStyle = this.mouseColor;
+        this.context.fillRect(x, y - yOffset, 2, size);
     }
 }
