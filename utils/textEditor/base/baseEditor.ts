@@ -231,8 +231,7 @@ export default abstract class BaseEditor {
         let x = 10; // Start position
         const y = (this.characterSize + 6) + this.position.line * this.characterSize;
         if(!this.context) return; // Returns if there is no canvas, else calculates x position
-        for(var i = 0; i < this.position.x; i++) if(this.text[this.position.line][i])
-            x += this.context.measureText(this.text[this.position.line][i]).width;
+        x += this.context.measureText(this.text[this.position.line]).width; // Appends text width
 
         // Draws Mouse
         this.context.fillStyle = this.mouseColor;
