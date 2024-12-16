@@ -376,6 +376,10 @@ export default abstract class BaseEditor {
     /**
      * Validates line
      *
+     * Returns true if the entered line is
+     * is within the amount of lines
+     * in the text.
+     *
      * @param line Line
      * @returns Valid status
      */
@@ -385,6 +389,9 @@ export default abstract class BaseEditor {
 
     /**
      * Validates position
+     *
+     * Returns true if the entered position x
+     * is within the text lines length.
      *
      * @param textLine Text Line
      * @param x Position on line
