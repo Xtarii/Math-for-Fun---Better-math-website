@@ -46,7 +46,7 @@ export default class MathTextEditorManager extends BaseEditor {
 
 
         // Handles events
-        console.log(event.key); // DEBUG
+        // console.log(event.key); // DEBUG
 
 
 
@@ -58,7 +58,16 @@ export default class MathTextEditorManager extends BaseEditor {
 
             // Inserts string
             this.insertString(event.key, this.position.x, this.position.line);
-            this.moveCursorRight(1);
+
+            /**
+             * Because the "math way" of moving the cursor
+             * moves it and checks for ")" and moves again
+             * if match - we use the old way to just move
+             * it, that way the user can place more
+             * numbers or characters in special places like:
+             * a^2 | a^25
+             */
+            this.moveCursorRight(1, false); // Uses the old way to move the cursor
         }
         if(!event.ctrlKey && event.key.startsWith("^")) {
             let str = "^"; // Formatter string
@@ -147,14 +156,6 @@ export default class MathTextEditorManager extends BaseEditor {
 
 
 
-    public parseParentheses(text: string) : string {
-        return "";
-    }
-
-
-
-
-
     public drawMouse(): void {
         let x = 10; // Start position
         const y = (this.characterSize + 6) + this.position.line * this.characterSize;
@@ -170,6 +171,12 @@ export default class MathTextEditorManager extends BaseEditor {
             // Power-off parsing
             if(char === "^") {
                 const parentheses: "("[] = []; // List of parentheses
+
+                // Text config
+                this.context.font = `${this.textSize.small}px Arial`;
+                size = this.textSize.small;
+
+
 
                 // Loops characters but skips "^"
                 for(let ix = i + 1; ix < this.text[this.position.line].length; ix++) {
@@ -190,9 +197,7 @@ export default class MathTextEditorManager extends BaseEditor {
                     }
 
                     // Appends character width to x
-                    this.context.font = `${this.textSize.small}px Arial`;
-                    size = this.textSize.small;
-                    x += this.context.measureText(oChar).width;
+                    if(ix < this.position.x) x += this.context.measureText(oChar).width;
                 }
                 continue; // Continues without printing character
             }
@@ -207,5 +212,61 @@ export default class MathTextEditorManager extends BaseEditor {
         // Draws Mouse
         this.context.fillStyle = this.mouseColor;
         this.context.fillRect(x, y - yOffset, 2, size);
+    }
+
+
+
+
+
+    protected removeCharacterBefore(x: number, line: number): void {
+        const text = this.text[line];
+
+        // Handles input types
+        if(text[x] === "(" && text[x - 1] === "^") {
+            // Removes two characters : Power of characters
+            super.removeCharacterBefore(x, line);
+            super.removeCharacterBefore(x - 1, line);
+            this.position.x -= 1; // Moves one more to the left
+
+            // Right parentheses removal
+            if(text[x + 1] === ")") this.removeCharacterAfter(this.position.x, line);
+            return;
+        }
+        super.removeCharacterBefore(x, line); // DEFAULT
+    }
+
+    public moveCursorLeft(x: number): void {
+        super.moveCursorLeft(x);
+
+        // Handles special characters
+        const line = this.text[this.position.line];
+        if(line[this.position.x] === "(" && line[this.position.x - 1] === "^")
+            super.moveCursorLeft(1);
+    }
+
+
+    public moveCursorRight(x: number): void;
+    /**
+     * Moves Editing Position Right
+     *
+     * @param x The amount to move right
+     * @param check Checks for special characters
+     */
+    public moveCursorRight(x: number, check: boolean): void;
+    public moveCursorRight(x: number, check?: boolean): void {
+        if(check) { // Handles special characters
+            const line = this.text[this.position.line];
+            if(line[this.position.x] === "^" && line[this.position.x + 1] === "(")
+                super.moveCursorRight(1);
+        }
+
+        /**
+         * Moves after, unlike move to left,
+         * because otherwise it will register
+         * a special character before we
+         * want to jump over it.
+         */
+
+        super.moveCursorRight(x); // DEFAULT Movement
     }
 }
