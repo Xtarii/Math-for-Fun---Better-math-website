@@ -21,36 +21,24 @@ export default class MathTextEditorManager extends BaseEditor {
 
     protected onKeyDown(self: MathTextEditorManager, event: KeyboardEvent) : void {
         event.preventDefault();
+        super.onKeyDown(self, event); // Parent Key Events
 
 
 
-        /**
-         * Works Fine in multiline
-         */
-
-        // text[0] = "Hello line 1";
-        // text.push("Hello World! line 2");
-        // this.setText(text);
 
 
+        // Handles events
         console.log(event.key); // DEBUG
-
-
-        // Handles Input
-        if(event.key === "Backspace") {
-            this.position.x -= 1; // Moves left without controls
-            this.removeCharacterBefore(this.position.x, this.position.line);
-            if(this.position.x < 0) this.position.x = 0; // Sets mouse bounds
-        }
-        if(event.key === "Delete") {
-            this.removeCharacterAfter(this.position.x, this.position.line);
-        }
 
 
 
         // Key Inputs
         if(event.key.length === 1 && !event.ctrlKey) {
-            // this.text[this.position.line] += event.key;
+            // Inserts new line if reached end
+            if(this.text[this.position.line].length >= this.lineWidth)
+                this.insertNewLine(this.text[this.position.line].length, this.position.line);
+
+            // Inserts string
             this.insertString(event.key, this.position.x, this.position.line);
             this.moveCursorRight(1);
         }
@@ -63,15 +51,6 @@ export default class MathTextEditorManager extends BaseEditor {
             this.insertString(str, this.position.x, this.position.line);
             this.moveCursorRight(str.length - 1); // Sets mouse position to be before the end parentheses
         }
-
-        // New Line
-        if(event.key === "Enter") this.insertNewLine(this.position.x, this.position.line);
-
-        // Position
-        if(event.key === "ArrowLeft") this.moveCursorLeft(1);
-        if(event.key === "ArrowRight") this.moveCursorRight(1);
-        if(event.key === "ArrowUp") this.moveCursorUp(1);
-        if(event.key === "ArrowDown") this.moveCursorDown(1);
 
 
 

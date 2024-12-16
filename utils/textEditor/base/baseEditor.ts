@@ -138,7 +138,46 @@ export default abstract class BaseEditor {
     /**
      * Key Event Handler Function
      */
-    protected onKeyDown(self: BaseEditor, event: KeyboardEvent) : void {}
+    protected onKeyDown(self: BaseEditor, event: KeyboardEvent) : void {
+        // Handles input
+        switch(event.key) {
+            // Arrow Inputs
+            case "ArrowLeft": {
+                this.moveCursorLeft(1);
+                break;
+            }
+            case "ArrowRight": {
+                this.moveCursorRight(1);
+                break;
+            }
+            case "ArrowUp": {
+                this.moveCursorUp(1);
+                break;
+            }
+            case "ArrowDown": {
+                this.moveCursorDown(1);
+                break;
+            }
+
+
+            // Default Inputs
+            case "Enter": {
+                this.insertNewLine(this.position.x, this.position.line);
+                break;
+            }
+            case "Backspace": {
+                this.position.x -= 1; // Moves left without controls
+                this.removeCharacterBefore(this.position.x, this.position.line);
+                if(this.position.x < 0) this.position.x = 0; // Sets mouse bounds
+                break;
+            }
+            case "Delete": {
+                this.removeCharacterAfter(this.position.x, this.position.line);
+                break;
+            }
+        }
+    }
+
     /**
      * Render function
      *
@@ -428,8 +467,8 @@ export default abstract class BaseEditor {
         this.canvas.height = height * size;
 
         // Line Width and Height
-        this.lineWidth = Math.round(this.canvas.width / this.characterSize) - 1;
-        this.lineHeight = Math.round(this.canvas.height / this.characterSize) - 1;
+        this.lineWidth = Math.round(this.canvas.width * 0.10727969348);     //- / this.characterSize) - 1;
+        this.lineHeight = Math.round(this.canvas.height * 0.10727969348);   //- / this.characterSize) - 1;
 
         this.context?.scale(size, size); // Updates Context, this will minimize blur
     }
