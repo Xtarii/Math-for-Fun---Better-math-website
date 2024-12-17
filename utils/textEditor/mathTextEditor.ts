@@ -33,6 +33,7 @@ export default class MathTextEditorManager extends BaseEditor {
      */
     constructor(canvas: HTMLCanvasElement, onUpdateText?: (text: string) => void) {
         super(canvas, onUpdateText); // Creates Base Text Manager
+        this.defaultText = "x = ..."; // Sets default text
     }
 
 

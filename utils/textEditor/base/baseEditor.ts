@@ -67,6 +67,14 @@ export default abstract class BaseEditor {
      * Mouse Color
      */
     protected mouseColor: string = "#ffffff71";
+    /**
+     * Default text
+     *
+     * This text is shown when
+     * the canvas editor has no
+     * lines of text in it.
+     */
+    protected defaultText: string = "Write here...";
 
 
 
@@ -196,7 +204,7 @@ export default abstract class BaseEditor {
 
         // Default render
         if(this.text.length == 1 && this.text[0] == "")
-            this.drawText("Skriv här...", this.mouseColor, 10, this.characterSize + 4);
+            this.drawText(this.defaultText, this.mouseColor, 10, this.characterSize + 4);
     }
 
 
