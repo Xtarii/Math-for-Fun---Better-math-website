@@ -1,7 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
-import MathTextEditor from "@/components/input/textEditor";
 import SubmitPanel from "@/components/submit/panel";
 import { generateFeedback } from "@/utils/api/gemini";
 import LoadingWheel from "@/components/loading/wheel";
@@ -10,6 +9,7 @@ import { QuestionType } from "@/utils/supabase/types/types";
 import ErrorMessage from "@/components/errors/message";
 import GeoGebra from "@/components/geogebra/geogebra";
 import { title } from "@/utils/config";
+import MathEditor from "@/components/editor/mathEditor";
 
 
 
@@ -23,7 +23,7 @@ export default function Question() : ReactElement {
     const [ content, setContent ] = useState<QuestionType>();
     const [ contentText, setContentText ] = useState<string[]>();
 
-    const [ text, updateText ] = useState("");
+    const [ text, setText ] = useState("");
     const [ score, setScore ] = useState<number>(0);
     const [ message, setMessage ] = useState<string>();
 
@@ -124,7 +124,7 @@ export default function Question() : ReactElement {
 
             {/* Tool bar */}
             <div className="bg-grayish absolute right-0 h-screen w-2/5 border-solid border-l-2 border-slate-500">
-                <MathTextEditor className="h-2/4 w-full" onUpdateText={updateText} />
+                <MathEditor className="h-2/4 w-full" onChange={setText} />
                 <GeoGebra className="h-2/4 w-full" />
             </div>
         </div>}
