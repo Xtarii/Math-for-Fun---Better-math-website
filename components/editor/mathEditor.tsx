@@ -4,12 +4,12 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { ReactElement, useEffect, useState } from "react";
+import { MathInputRules } from "./input/input";
+import MathEditorMenu from "./menu/menu";
 
 // Style sheets
 import "katex/dist/katex.min.css";
 import "./tiptap.scss";
-import { MathInputRules } from "./input/input";
-import MathEditorMenu from "./menu/menu";
 
 /**
  * Math Text Editor
@@ -28,6 +28,7 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
             StarterKit,
             Placeholder,
             MathExtension.configure({
+                // evaluation: true, // Solves the math problem
                 addInlineMath: true
             }).extend({
                 // Input rules for math
@@ -70,9 +71,9 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
     // Component
     if(!client) return (<div className={props.className}>Loading Editor...</div>);
     return(<div className={props.className}>
-        <div className="w-full h-full shadow-md rounded-b-lg">
+        <div className="w-full h-full shadow-md">
             <MathEditorMenu editor={editor} />
-            <EditorContent className="bg-slate-800 w-full h-5/6" editor={editor} />
+            <EditorContent className="bg-slate-800 shadow-md w-full h-5/6 rounded-b-lg" editor={editor} />
         </div>
     </div>);
 }
