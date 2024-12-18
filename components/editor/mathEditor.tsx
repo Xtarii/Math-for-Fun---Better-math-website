@@ -45,17 +45,20 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
             // Parse editor text
             let str = "";
             for(const obj of editor.getJSON().content || []) {
-                if(obj.content) for(const content of obj.content) {
-                    let part = "";
+                if(obj.content) {
+                    for(const content of obj.content) {
+                        let part = "";
 
-                    // Gets part data
-                    if(content.type === "text") part = content.text || ""
-                    else if(content.type === "inlineMath") part = content.attrs?.latex;
+                        // Gets part data
+                        if(content.type === "text") part = content.text || ""
+                        else if(content.type === "inlineMath") part = content.attrs?.latex;
 
-                    // Appends to string
-                    if(part.startsWith(" ")) // Same line
-                        str += part;
-                    else str += "\n" + part; // New Line
+                        // Appends to string
+                        if(part.startsWith(" ") || content.type === "inlineMath") // Same line
+                            str += part;
+                        else str += "\n" + part; // New Line
+                    }
+                    str += "\n"; // New line after part
                 } else str += "\n"; // New line for empty paragraphs
             }
             if(props.onChange) props.onChange(str); // Sets text to parsed string
