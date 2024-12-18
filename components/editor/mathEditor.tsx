@@ -8,6 +8,8 @@ import { ReactElement, useEffect, useState } from "react";
 // Style sheets
 import "katex/dist/katex.min.css";
 import "./tiptap.scss";
+import { MathInputRules } from "./input/input";
+import MathEditorMenu from "./menu/menu";
 
 /**
  * Math Text Editor
@@ -27,6 +29,11 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
             Placeholder,
             MathExtension.configure({
                 addInlineMath: true
+            }).extend({
+                // Input rules for math
+                addInputRules() {
+                    return MathInputRules(this.editor.state.schema.nodes.paragraph);
+                }
             }),
         ],
         content: "",
@@ -61,9 +68,7 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
     if(!client) return (<div className={props.className}>Loading Editor...</div>);
     return(<div className={props.className}>
         <div className="w-full h-full shadow-md rounded-b-lg">
-            <div className="bg-slate-900 h-1/6 w-full flex">
-                <h1 className="text-center text-lg m-auto">MathEditor</h1>
-            </div>
+            <MathEditorMenu editor={editor} />
             <EditorContent className="bg-slate-800 w-full h-5/6" editor={editor} />
         </div>
     </div>);

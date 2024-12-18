@@ -65,7 +65,7 @@ export default function Question() : ReactElement {
                     <div className="ml-4">
                         {contentText?.map((value, index) =>
                             <div className="h-fit min-h-8" key={index}>
-                                <MathJaxComponent content={value} />
+                                <MathJaxComponent className="text-lg text-left w-full" content={value} />
                             </div>
                         )}
                     </div>
