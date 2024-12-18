@@ -20,7 +20,7 @@ export default function MathEditorMenu(props: { editor?: Editor | null }) : Reac
                 name="$\sqrt(x)$"
                 inserts="\sqrt()"
 
-                className="rounded-lg h-8 w-8 flex m-auto hover:bg-slate-600"
+                className="rounded-lg h-8 w-fit min-w-8 max-w-20 flex m-auto hover:bg-slate-600"
 
                 steps={6}
                 scrollIntoView
@@ -30,9 +30,29 @@ export default function MathEditorMenu(props: { editor?: Editor | null }) : Reac
                 name="$\frac{x}{x}$"
                 inserts="\frac{}{}"
 
-                className="rounded-lg h-8 w-8 flex m-auto hover:bg-slate-600"
+                className="rounded-lg h-8 w-fit min-w-8 max-w-20 flex m-auto hover:bg-slate-600"
 
                 steps={6}
+                scrollIntoView
+            />
+            <MathEditorInsertTextButton
+                editor={props.editor}
+                name="$x^{x}$"
+                inserts="^{}"
+
+                className="rounded-lg h-8 w-fit min-w-8 max-w-20 flex m-auto hover:bg-slate-600"
+
+                steps={2}
+                scrollIntoView
+            />
+            <MathEditorInsertTextButton
+                editor={props.editor}
+                name="$\int_a^b$"
+                inserts="\int_"
+
+                className="rounded-lg h-8 w-fit min-w-8 max-w-20 flex m-auto hover:bg-slate-600"
+
+                steps={5}
                 scrollIntoView
             />
         </div>
