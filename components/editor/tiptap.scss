@@ -8,6 +8,10 @@
     margin: auto;
     padding-left: 8px;
     padding-top: 8px;
+
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 .tiptap:focus {
     outline: none;
@@ -23,6 +27,8 @@
     height: 0;
     pointer-events: none;
 }
+
+
 
 
 
