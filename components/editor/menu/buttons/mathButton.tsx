@@ -1,4 +1,4 @@
-import MathJaxComponent from "@/components/mathJax/mathJax";
+import MathParagraph from "@/components/mathParagraph/mathParagraph";
 import { Editor } from "@tiptap/react";
 import { ReactElement } from "react";
 
@@ -18,7 +18,7 @@ export function MathEditorInsertTextButton(props: { name: string, inserts: strin
                 props.editor.commands.insertContent(props.inserts);
                 props.editor.commands.focus(from + (props.steps || 0), { scrollIntoView: props.scrollIntoView });
             }}>
-            <MathJaxComponent className="text-sm m-auto text-center" content={props.name} />
+            <MathParagraph className="text-sm m-auto text-center" content={props.name} />
         </button>
     </div>);
 }

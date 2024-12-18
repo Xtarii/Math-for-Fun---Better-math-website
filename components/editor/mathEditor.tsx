@@ -69,11 +69,13 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
 
 
     // Component
-    if(!client) return (<div className={props.className}>Loading Editor...</div>);
     return(<div className={props.className}>
         <div className="w-full h-full shadow-md">
             <MathEditorMenu editor={editor} />
-            <EditorContent className="bg-slate-800 shadow-md w-full h-5/6 rounded-b-lg" editor={editor} />
+            {client && <EditorContent className="bg-slate-800 shadow-md w-full h-5/6 rounded-b-lg" editor={editor} />}
+            {!client && <div className="bg-slate-800 shadow-md w-full h-5/6 rounded-b-lg flex">
+                <p className="text-slate-400 m-auto text-center text-2xl">Loading Editor...</p>
+            </div>}
         </div>
     </div>);
 }
