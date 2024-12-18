@@ -10,7 +10,7 @@ import ErrorMessage from "@/components/errors/message";
 import GeoGebra from "@/components/geogebra/geogebra";
 import { title } from "@/utils/config";
 import MathEditor from "@/components/editor/mathEditor";
-import MathJaxComponent from "@/components/mathJax/mathJax";
+import MathParagraph from "@/components/mathParagraph/mathParagraph";
 
 
 
@@ -65,7 +65,7 @@ export default function Question() : ReactElement {
                     <div className="ml-4">
                         {contentText?.map((value, index) =>
                             <div className="h-fit min-h-8" key={index}>
-                                <MathJaxComponent className="text-lg text-left w-full" content={value} />
+                                <MathParagraph className="text-lg text-left w-full" content={value} />
                             </div>
                         )}
                     </div>
