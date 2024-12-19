@@ -12,7 +12,8 @@ export default function Content() : ReactElement {
     const chap = params.chap?.toString().replace("%20", " ") || "MA1a 1"; // The Chapter to Get content from
 
     // States
-    const [ load, setLoad ] = useState(true);
+    const [ load, setLoad ] = useState<boolean>(true);
+    const [ auth, setAuth ] = useState<boolean>(false);
     const [ content, setContent ] = useState<{ [key: string]: { id: string, number: number, difficulty: number }[] }>();
 
 
