@@ -9,7 +9,21 @@ const key = process.env.NEXT_PUBLIC_API_KEY || "";
 /**
  * Supabase Client Instance
  */
-const client = createClient(url, key);
+export const client = createClient(url, key);
+
+
+
+/**
+ * Tables names
+ *
+ * A List of all the tables names
+ */
+export const tables = {
+    /**
+     * Questions table
+     */
+    questions: "Questions"
+}
 
 
 
