@@ -14,7 +14,7 @@ import "./tiptap.scss";
 /**
  * Math Text Editor
  */
-export default function MathEditor(props: { className?: string, onChange?: (arg: string) => void }) : ReactElement {
+export default function MathEditor(props: { className?: string, onChange?: (arg: string) => void, default?: string }) : ReactElement {
     const [client, setClient] = useState<boolean>(false);
     useEffect(() => {
         setClient(true);
@@ -37,7 +37,7 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
                 }
             }),
         ],
-        content: "",
+        content: props.default,
         immediatelyRender: false,
 
 
