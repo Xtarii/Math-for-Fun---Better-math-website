@@ -48,7 +48,7 @@ export async function getQuestionByID(id: string) : Promise<QuestionType | null>
     .eq("id", id);
     if(error) console.error(error); // DEBUG Error
     const parse = data ? data[0] : null;
-    if(parse === null) return null;
+    if(!parse) return null;
 
 
     // Manually converts data
