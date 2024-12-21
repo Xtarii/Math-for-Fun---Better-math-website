@@ -1,5 +1,5 @@
 import { client, tables } from "../supabase";
-import { QuestionIdentifierType, QuestionType } from "../types/types";
+import { ChapterType, QuestionIdentifierType, QuestionType } from "../types/types";
 
 
 
@@ -100,4 +100,21 @@ export async function insertQuestion(number: number, difficulty: number, chapter
     if(error) console.error(error); // DEBUG Error
 
     console.log(data);
+}
+
+
+
+
+
+/**
+ * Gets a list of all the chapters
+ *
+ * @returns Chapters List
+ */
+export async function getChapters() : Promise<ChapterType[]> {
+    const { data, error } = await client.from(tables.chapters).select("*");
+    if(error) console.error(error); // DEBUG Error
+
+    const converted: ChapterType[] = data || [];
+    return converted;
 }
