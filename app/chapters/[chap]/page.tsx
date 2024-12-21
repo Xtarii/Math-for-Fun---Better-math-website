@@ -2,9 +2,10 @@
 import { useParams, useRouter } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
 import LoadingWheel from "@/components/loading/wheel";
-import { getChapterContent } from "@/utils/supabase/supabase";
 import { title } from "@/utils/config";
 import { getUser } from "@/utils/supabase/account/auth";
+import { QuestionIdentifierType } from "@/utils/supabase/types/types";
+import { getQuestionsOfChapter } from "@/utils/supabase/database/database";
 
 
 
@@ -16,7 +17,7 @@ export default function Content() : ReactElement {
     // States
     const [ load, setLoad ] = useState<boolean>(true);
     const [ auth, setAuth ] = useState<boolean>(false);
-    const [ content, setContent ] = useState<{ [key: string]: { id: string, number: number, difficulty: number }[] }>();
+    const [ content, setContent ] = useState<{ [key: string]: QuestionIdentifierType[] }>();
 
 
     // Fetches Chapter Data
@@ -26,8 +27,8 @@ export default function Content() : ReactElement {
 
         // Content fetching
         (async () => {
-            const items = await getChapterContent(chap);
-            const sorted: { [key: string]: { id: string, number: number, difficulty: number }[] } = {};
+            const items = await getQuestionsOfChapter(chap);
+            const sorted: { [key: string]: QuestionIdentifierType[] } = {};
 
             // Sorts Content and sets to page content
             for(const item of items) {
@@ -80,25 +81,28 @@ export default function Content() : ReactElement {
                         <div className="m-auto ml-4">
                             <p>Upg. {value.number}</p>
                         </div>
-
-                        <div className="m-auto mr-4 h-full w-[16rem] justify-self-right flex">
-                            {auth && <div className="m-auto mr-4">
-                                <button onClick={() => {router.push(`/chapters/editor/${value.id}`)}} className="hover:bg-slate-500 hover:opacity-20 rounded-lg">
-                                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                                    </svg>
-                                </button>
-                            </div>}
-
-                            <div className="m-auto mx-0 rounded-full size-7 flex shadow" style={{
-                                backgroundColor: value.difficulty === 1 ? "#00B4A3" :
-                                value.difficulty === 2 ? "#00CC99" :
-                                value.difficulty === 3 ? "#008080" : "#603990"
-                            }}>
-                                <p className="m-auto text-center text-gray-900">{value.difficulty}</p>
-                            </div>
-                        </div>
                     </a>
+                    <div className="m-auto h-full max-w-[8rem] w-fit justify-self-right flex">
+                        {auth && <div className="m-auto ml-4">
+                            <button onClick={async () => {
+                                setLoad(true);
+                                router.push(`/chapters/editor/${value.id}`);
+                                setLoad(false);
+                            }} className="hover:bg-slate-500 hover:opacity-20 rounded-lg">
+                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                </svg>
+                            </button>
+                        </div>}
+
+                        <div className="m-auto mx-4 rounded-full size-7 flex shadow" style={{
+                            backgroundColor: value.difficulty === 1 ? "#00B4A3" :
+                            value.difficulty === 2 ? "#00CC99" :
+                            value.difficulty === 3 ? "#008080" : "#603990"
+                        }}>
+                            <p className="m-auto text-center text-gray-900">{value.difficulty}</p>
+                        </div>
+                    </div>
                 </div>)}
             </div>
         </div>)}
