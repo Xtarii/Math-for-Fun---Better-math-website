@@ -22,7 +22,12 @@ export const tables = {
     /**
      * Questions table
      */
-    questions: "Questions"
+    questions: "Questions",
+
+    /**
+     * Chapters table
+     */
+    chapters: "Chapters",
 }
 
 
@@ -81,6 +86,6 @@ export async function getQuestion(chapter: string, id: string) : Promise<Questio
 
     // Sorts Data
     const list: QuestionType[] = data.data || [];
-    for(const item of list) if(item.id === id) return item;
+    for(const item of list) if(item.identifier.id === id) return item;
     return null;
 }
