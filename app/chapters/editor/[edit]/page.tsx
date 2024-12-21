@@ -1,5 +1,6 @@
 "use client"
 import MathEditor from "@/components/editor/mathEditor";
+import ChapterSelector from "@/components/ui/forms/inputs/chapterSelector";
 import LoadingWheel from "@/components/loading/wheel";
 import { getUser } from "@/utils/supabase/account/auth";
 import { getQuestionByID, insertQuestion, updateQuestion } from "@/utils/supabase/database/database";
@@ -70,8 +71,12 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
         setLoad(true);
 
 
-        // Required data
-        if(!question || !answer) return;
+        // Checks Required data
+        if(!question || !answer || !chapter || !number || !difficulty) {
+            setLoad(false);
+            setError("Can not upload empty data");
+            return;
+        }
 
 
         // Submit data
@@ -96,45 +101,72 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
     return(<div>
         {load && <LoadingWheel />}
         {!load && <div>
-            <form className="flex" onSubmit={handleSubmit}>
-                <div>
-                    <h1>Required</h1>
+            <form className="flex flex-wrap" onSubmit={handleSubmit}>
+                <div className="w-fit h-screen mx-2">
+                    <h1 className="text-xl text-center mx-auto">Required</h1>
 
                     {/* Inputs */}
-                    <input className="text-gray-700" name="chapter" placeholder="Chapter" value={chapter} onChange={e => setChapter(e.target.value)} required />
-                    <input className="text-gray-700" name="difficulty" type="number" placeholder="Difficulty" value={difficulty} onChange={e => setDifficulty(e.target.valueAsNumber)} required />
-                    <input className="text-gray-700" name="number" type="number" placeholder="Number" value={number} onChange={e => setNumber(e.target.valueAsNumber)} required />
+                    <div className="max-w-sm mr-auto ml-4 my-4">
+                        <ChapterSelector default={chapter} onChange={setChapter} />
 
+                        <div className="grid gap-6 mb-6 md:grid-cols-2 mt-4">
+                            <div className="mb-5">
+                                <label htmlFor="difficulty" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
+                                <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="difficulty" id="difficulty" type="number" placeholder="Difficulty" value={difficulty} onChange={e => setDifficulty(e.target.valueAsNumber)} required />
+                            </div>
+                            <div className="mb-5">
+                                <label htmlFor="number" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Number</label>
+                                <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="number" id="number" type="number" placeholder="Number" value={number} onChange={e => setNumber(e.target.valueAsNumber)} required />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="max-w-sm mr-auto ml-4 my-4">
+                        <h5 className="text-lg">Question</h5>
+                        <MathEditor className="w-full h-64 mb-16" default={question} onChange={setQuestion} />
 
-                    <MathEditor default={question} onChange={setQuestion} />
-                    <MathEditor default={answer} onChange={setAnswer} />
-
-
-                    <button type="submit">Upload</button>
+                        <h5 className="text-lg mt-16">Answer</h5>
+                        <MathEditor className="w-full h-64" default={answer} onChange={setAnswer} />
+                    </div>
                 </div>
 
-                <div>
-                    <h1>Optional</h1>
+                <div className="w-fit h-screen mx-2">
+                    <h1 className="text-xl text-center mx-auto">Optional</h1>
 
-                    <p>Do not use, under development</p>
+                    <p>Under development - Do not use this as this will have no effect on the content added</p>
 
-                    <input className="text-gray-700" name="image" type="file" placeholder="Image" value={image} onChange={e => setImage(e.target.value)} />
+
+
+                    <div className="flex items-center justify-center w-full">
+                        <label htmlFor="image" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                </svg>
+                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                            </div>
+                            <input className="hidden" name="image" id="image" type="file" placeholder="Image" value={image} onChange={e => setImage(e.target.value)} />
+                        </label>
+                    </div>
                 </div>
 
 
-                {/* Error message */}
-                {error && <div>
-                    <p className="text-red-500">{error}</p>
-                </div>}
+                <div className="w-11/12 m-auto mt-0 mb-8 flex">
+                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">Upload</button>
+
+                    {/* Message box */}
+                    {showMessage && <div className="m-auto ml-4">
+                        <p>Message Box</p>
+
+                        <a href="/chapters">Back</a>
+                    </div>}
+
+                    {/* Error message */}
+                    {error && <div className="m-auto ml-4">
+                        <p className="text-red-500 text-center">{error}</p>
+                    </div>}
+                </div>
             </form>
-
-
-            {/* Message box */}
-            {showMessage && <div>
-                <p>Message Box</p>
-
-                <a href="/chapters">Back</a>
-            </div>}
         </div>}
     </div>);
 }
