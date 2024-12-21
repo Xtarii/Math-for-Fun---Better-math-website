@@ -1,13 +1,14 @@
 "use client"; // To use states
 import LoadingWheel from "@/components/loading/wheel";
-import { getChapters } from "@/utils/supabase/supabase";
+import { getChapters } from "@/utils/supabase/database/database";
+import { ChapterType } from "@/utils/supabase/types/types";
 import { ReactElement, useEffect, useState } from "react";
 
 
 
 export default function Chapters() : ReactElement {
     const [ load, setLoad ] = useState(true);
-    const [ chapters, setChapters ] = useState<{ id: string, name: string }[]>();
+    const [ chapters, setChapters ] = useState<ChapterType[]>();
 
 
     // Fetches Chapter Data
