@@ -3,7 +3,6 @@ import MathEditor from "@/components/editor/mathEditor";
 import LoadingWheel from "@/components/loading/wheel";
 import { getUser } from "@/utils/supabase/account/auth";
 import { getQuestionByID, insertQuestion, updateQuestion } from "@/utils/supabase/database/database";
-import { QuestionType } from "@/utils/supabase/types/types";
 import { useRouter } from "next/navigation";
 import { FormEvent, ReactElement, useEffect, useState } from "react";
 
