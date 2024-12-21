@@ -118,3 +118,20 @@ export async function getChapters() : Promise<ChapterType[]> {
     const converted: ChapterType[] = data || [];
     return converted;
 }
+
+
+
+/**
+ * Inserts new Chapter into the chapters table
+ *
+ * @param name Chapter Name
+ * @returns Returns the new chapter
+ */
+export async function insertChapter(name: string) : Promise<ChapterType | null> {
+    const { data, error } = await client.from(tables.chapters).insert([{ name }]).select();
+    if(error) console.error(error);
+
+    // Converts data
+    const converted: ChapterType | null = data ? data[0] : null;
+    return converted;
+}
