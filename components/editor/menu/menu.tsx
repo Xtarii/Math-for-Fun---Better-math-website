@@ -6,8 +6,8 @@ import { MathEditorInsertTextButton } from "./buttons/mathButton";
  * Math Editor Menu
  */
 export default function MathEditorMenu(props: { editor?: Editor | null }) : ReactElement {
-    if(!props.editor) return(<div className="bg-slate-900 h-1/6 w-full flex" />);
-    return(<div className="bg-slate-700 h-1/6 w-full">
+    if(!props.editor) return(<div className="bg-slate-700 h-1/6 w-full flex" />);
+    return(<div className="bg-slate-700 min-h-24 h-1/6 w-full">
         <div className="w-full h-2/6 border-b-2 border-slate-500 flex">
             <h5 className="justify-self-left ml-4 text-left text-lg m-auto">MathEditor</h5>
 
