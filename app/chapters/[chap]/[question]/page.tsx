@@ -4,19 +4,18 @@ import { ReactElement, useEffect, useState } from "react";
 import SubmitPanel from "@/components/submit/panel";
 import { generateFeedback } from "@/utils/api/gemini";
 import LoadingWheel from "@/components/loading/wheel";
-import { getQuestion } from "@/utils/supabase/supabase";
 import { QuestionType } from "@/utils/supabase/types/types";
 import ErrorMessage from "@/components/errors/message";
 import GeoGebra from "@/components/geogebra/geogebra";
 import { title } from "@/utils/config";
 import MathEditor from "@/components/editor/mathEditor";
 import MathParagraph from "@/components/mathParagraph/mathParagraph";
+import { getQuestionByID } from "@/utils/supabase/database/database";
 
 
 
 export default function Question() : ReactElement {
     const params = useParams();
-    const chap = params.chap?.toString().replace("%20", " ") || "MA1a 1"; // The Chapter to Get content from
     const question = params.question?.toString() || "";
 
     // States
@@ -37,7 +36,7 @@ export default function Question() : ReactElement {
 
         // Content fetching
         (async () => {
-            const res = await getQuestion(chap, question);
+            const res = await getQuestionByID(question);
             setContent(res || undefined);
 
             // Parses the question text
@@ -72,13 +71,13 @@ export default function Question() : ReactElement {
 
                     <div className="flex m-auto mt-4">
                         <div className="absolute right-2 top-2 flex w-40">
-                            <p className="m-auto ml-4">Upg. {content.number}</p>
+                            <p className="m-auto ml-4">Upg. {content.identifier.number}</p>
                             <div className="m-auto mr-4 justify-self-right rounded-full size-7 flex shadow" style={{
-                                backgroundColor: content.difficulty === 1 ? "#00B4A3" :
-                                content.difficulty === 2 ? "#00CC99" :
-                                content.difficulty === 3 ? "#008080" : "#603990"
+                                backgroundColor: content.identifier.difficulty === 1 ? "#00B4A3" :
+                                content.identifier.difficulty === 2 ? "#00CC99" :
+                                content.identifier.difficulty === 3 ? "#008080" : "#603990"
                             }}>
-                                <p className="m-auto text-lg text-center text-gray-900">{content.difficulty}</p>
+                                <p className="m-auto text-lg text-center text-gray-900">{content.identifier.difficulty}</p>
                             </div>
                         </div>
                         {content.image && <img className="m-auto mt-4 w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
