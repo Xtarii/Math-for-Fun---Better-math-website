@@ -3,7 +3,7 @@ import { ReactElement, useState } from "react";
 /**
  * List Input field
  */
-export default function ListInput(props: { placeholder?: string, default?: string[], onChange?: (args: string[]) => void, className?: string }) : ReactElement {
+export default function ListInput(props: { placeholder?: string, default?: string[], onChange?: (args: string[]) => void, className?: string, name?: string, id?: string }) : ReactElement {
     const [ content, setContent ] = useState<string[]>(props.default || []);
     const [ input, setInput ] = useState<string>("");
     const [ error, setError ] = useState<string>();
@@ -42,7 +42,7 @@ export default function ListInput(props: { placeholder?: string, default?: strin
         <div className="flex flex-wrap w-full h-full m-auto rounded-lg bg-white dark:bg-slate-700">
             <div className="w-full">
                 <div className="relative mb-1 w-full">
-                    <input className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5 rounded-t-lg dark:bg-slate-700 dark:border-slate-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder={props.placeholder} />
+                    <input name={props.name} id={props.id} className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5 rounded-t-lg dark:bg-slate-700 dark:border-slate-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder={props.placeholder} />
                     <div className="absolute bg-green-700 rounded-tr-lg inset-y-0 end-0 flex items-center ps-2 px-2 hover:bg-green-800 cursor-pointer" onClick={() => handleAddContent()}>
                         <svg className="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-7 7V5"/>
