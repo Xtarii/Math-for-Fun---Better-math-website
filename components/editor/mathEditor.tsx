@@ -52,7 +52,7 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
 
                         // Gets part data
                         if(content.type === "text") part = content.text || ""
-                        else if(content.type === "inlineMath") part = content.attrs?.latex;
+                        else if(content.type === "inlineMath") part = "$" + content.attrs?.latex + "$";
 
                         // Appends to string
                         if(part.startsWith(" ") || content.type === "inlineMath") // Same line
