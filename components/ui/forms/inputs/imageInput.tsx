@@ -6,9 +6,9 @@ import { ReactElement, useState } from "react";
  *
  * A image input for forms
  */
-export default function ImageInput(props: { onChange?: (arg: string) => void, className?: string }) : ReactElement {
+export default function ImageInput(props: { default?: string, onChange?: (arg: string) => void, className?: string }) : ReactElement {
     const [ error, setError ] = useState<string>();
-    const [ image, setImage ] = useState<string>("");
+    const [ image, setImage ] = useState<string>(props.default || "");
 
 
 

@@ -135,7 +135,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
                     <h1 className="text-xl text-center mx-auto">Optional</h1>
 
 
-                    <ImageInput className="w-[32rem]" />
+                    <ImageInput default={image} className="w-[32rem]" onChange={setImage} />
                     <div className="mt-10">
                         <label htmlFor="flags" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Flags</label>
                         <ListInput name="flags" id="flags" className="overflow-hidden max-w-[32rem]" default={flags} onChange={setFlags} placeholder="Flags" />

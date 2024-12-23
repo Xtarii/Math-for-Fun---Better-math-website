@@ -1,3 +1,4 @@
+import { storeImage } from "../storage/storage";
 import { client, tables } from "../supabase";
 import { ChapterType, QuestionIdentifierType, QuestionType } from "../types/types";
 
@@ -82,7 +83,11 @@ export async function updateQuestion(question: QuestionType) {
     const { data, error } = await client.from(tables.questions).update({
         question: question.question,
         answer: question.answer,
-        image: question.image,
+
+        // Creates image link
+        image: question.image ?
+            await storeImage(`${question.identifier.chapter}/${question.identifier.number}`, question.image)
+            : null,
         flags: question.flags,
 
         difficulty: question.identifier.difficulty,
@@ -92,10 +97,27 @@ export async function updateQuestion(question: QuestionType) {
     if(error) console.error(error); // DEBUG Error
 }
 
-
+/**
+ * Inserts question
+ *
+ * @param number Question Number
+ * @param difficulty Question Difficulty
+ * @param chapter Question Chapter
+ * @param question Question
+ * @param answer Answer
+ * @param flags Flags
+ * @param image Image
+ */
 export async function insertQuestion(number: number, difficulty: number, chapter: string, question: string, answer: string, flags: string[], image?: string) {
     const { data, error } = await client.from(tables.questions).insert([
-        {question, answer, image, flags, difficulty, number, chapter}
+        {
+            question, answer,
+
+            // Creates link to image
+            image: image ? await storeImage(`${chapter}/${number}`, image) : null,
+
+            flags, difficulty, number, chapter
+        }
     ]).select();
     if(error) console.error(error); // DEBUG Error
 
