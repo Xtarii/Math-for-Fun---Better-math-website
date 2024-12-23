@@ -7,7 +7,7 @@ import LoadingWheelLocal from "../../loadingbars/localWheel";
 /**
  * Selection Menu for selecting chapters
  */
-export default function ChapterSelector(props: { default?: string, onChange?: (arg: string) => void }) : ReactElement {
+export default function ChapterSelector(props: { default?: string, onChange?: (arg: string) => void, readOnly?: boolean }) : ReactElement {
     const [ load, setLoad ] = useState<boolean>(true);
     const [ open, setOpen ] = useState<boolean>(false);
 
@@ -62,6 +62,8 @@ export default function ChapterSelector(props: { default?: string, onChange?: (a
 
     // Open selection menu handle
     const handleOpen = async (value: boolean) => {
+        if(props.readOnly) return; // Can't open if readonly
+
         setOpen(value);
         setSearchError(undefined); // Removes any Error
         if(!value) return;
