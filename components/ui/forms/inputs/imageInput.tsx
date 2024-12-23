@@ -6,7 +6,7 @@ import { ReactElement, useState } from "react";
  *
  * A image input for forms
  */
-export default function ImageInput(props: { default?: string, onChange?: (arg: string) => void, className?: string }) : ReactElement {
+export default function ImageInput(props: { default?: string, onChange?: (arg: string) => void, className?: string, readOnly?: boolean }) : ReactElement {
     const [ error, setError ] = useState<string>();
     const [ image, setImage ] = useState<string>(props.default || "");
 
@@ -57,7 +57,7 @@ export default function ImageInput(props: { default?: string, onChange?: (arg: s
                         <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                     </div>
-                    <input className="hidden" name="image" id="image" type="file" placeholder="Image" onChange={e => handleInput(e.target.files ? e.target.files[0] : null)} />
+                    <input className="hidden" name="image" id="image" type="file" placeholder="Image" onChange={e => handleInput(e.target.files ? e.target.files[0] : null)} readOnly={props.readOnly} />
                 </label>
                 {error && <div className="w-full">
                     <p className="ml-2 mt-2 text-red-500">{error}</p>
@@ -68,11 +68,11 @@ export default function ImageInput(props: { default?: string, onChange?: (arg: s
             <div className="w-1/4 ml-2">
                 {image && <div className="relative w-24 h-24">
                     <img src={image} alt="Uploaded Image" className="rounded-lg" />
-                    <div className="absolute right-0 top-0 bg-red-500 hover:bg-red-700 w-8 h-8 flex items-center justify-center rounded-lg" onClick={() => remove()}>
+                    {!props.readOnly && <div className="absolute right-0 top-0 bg-red-500 hover:bg-red-700 w-8 h-8 flex items-center justify-center rounded-lg" onClick={() => remove()}>
                         <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                         </svg>
-                    </div>
+                    </div>}
                 </div>}
             </div>
         </div>
