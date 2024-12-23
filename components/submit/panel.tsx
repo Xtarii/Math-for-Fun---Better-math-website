@@ -1,5 +1,5 @@
 "use client";
-import { getChapterContent, getQuestion } from "@/utils/supabase/supabase";
+import { getQuestionByID, getQuestionsOfChapter } from "@/utils/supabase/database/database";
 import { useParams, useRouter } from "next/navigation";
 import { MouseEvent, ReactElement } from "react";
 
@@ -61,16 +61,16 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
 
                 onClick={async (e) => {
                     e.preventDefault();
-                    const data = await getQuestion(chap, question);
-                    const questions = await getChapterContent(chap);
+                    const data = await getQuestionByID(question);
+                    const questions = await getQuestionsOfChapter(chap);
 
                     // Select random question
-                    while(true) {
+                    while(true && questions.length > 1) {
                         const randomQuestion = Math.floor(Math.random() * questions.length);
                         const question = questions[randomQuestion];
 
                         // Checks if question is not current and not to difficult
-                        if(question.difficulty > (data?.difficulty || 2) - 3 && question.difficulty < (data?.difficulty || 2) + 3 && question.id != data?.id) {
+                        if(question.difficulty > (data?.identifier.difficulty || 2) - 3 && question.difficulty < (data?.identifier.difficulty || 2) + 3 && question.id != data?.identifier.id) {
                             router.push(`/chapters/${chap}/${question.id}/`);
                             break;
                         }
