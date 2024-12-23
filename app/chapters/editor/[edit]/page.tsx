@@ -8,10 +8,12 @@ import { useRouter } from "next/navigation";
 import { FormEvent, ReactElement, useEffect, useState } from "react";
 import ListInput from "@/components/ui/forms/inputs/listInput";
 import ImageInput from "@/components/ui/forms/inputs/imageInput";
+import MessageBox from "@/components/ui/forms/messages/messageBox";
 
 export default function Edit({params} : { params: Promise<{ edit: "new" | string }> }) : ReactElement {
     const router = useRouter();
     const [ load, setLoad ] = useState<boolean>(true);
+    const [ newEdit, setNewEdit ] = useState<boolean>(true);
     const [ showMessage, setShowMessage ] = useState<boolean>(false);
     const [ error, setError ] = useState<string>();
 
@@ -33,9 +35,11 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
             if(!await getUser()) router.push("/account/login"); // Redirects non login users
             const edit = (await params).edit; // Gets the edit
             if(edit === "new") {
+                setNewEdit(true);
                 setLoad(false);
                 return;
             }
+            setNewEdit(false); // Indicates that this question is being updated
 
             // Fetches old question data
             const data = await getQuestionByID(edit);
@@ -82,8 +86,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
 
 
         // Submit data
-        const edit = (await params).edit;
-        if(edit === "new") {
+        if(newEdit) {
             // Uploads new question
             await insertQuestion(number, difficulty, chapter, question, answer, flags, image);
             setShowMessage(true);
@@ -92,7 +95,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
         }
 
         // Updates old question
-        await updateQuestion({ identifier: { id: edit, difficulty, number, chapter }, question, answer, image, flags });
+        await updateQuestion({ identifier: { id: (await params).edit, difficulty, number, chapter }, question, answer, image, flags });
         setShowMessage(true);
         setLoad(false);
     }
@@ -109,16 +112,16 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
 
                     {/* Inputs */}
                     <div className="max-w-sm mr-auto ml-4 my-4">
-                        <ChapterSelector default={chapter} onChange={setChapter} />
+                        <ChapterSelector default={chapter} onChange={setChapter} readOnly={!newEdit} />
 
                         <div className="grid gap-6 mb-6 md:grid-cols-2 mt-4">
                             <div className="mb-5">
                                 <label htmlFor="difficulty" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
-                                <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="difficulty" id="difficulty" type="number" placeholder="Difficulty" value={difficulty} onChange={e => setDifficulty(e.target.valueAsNumber)} required />
+                                <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="difficulty" id="difficulty" type="number" placeholder="Difficulty" value={difficulty} readOnly={!newEdit} onChange={e => setDifficulty(e.target.valueAsNumber)} required />
                             </div>
                             <div className="mb-5">
                                 <label htmlFor="number" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Number</label>
-                                <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="number" id="number" type="number" placeholder="Number" value={number} onChange={e => setNumber(e.target.valueAsNumber)} required />
+                                <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="number" id="number" type="number" placeholder="Number" value={number} readOnly={!newEdit} onChange={e => setNumber(e.target.valueAsNumber)} required />
                             </div>
                         </div>
                     </div>
@@ -135,7 +138,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
                     <h1 className="text-xl text-center mx-auto">Optional</h1>
 
 
-                    <ImageInput default={image} className="w-[32rem]" onChange={setImage} />
+                    <ImageInput default={image} className="w-[32rem]" onChange={setImage} readOnly={!newEdit} />
                     <div className="mt-10">
                         <label htmlFor="flags" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Flags</label>
                         <ListInput name="flags" id="flags" className="overflow-hidden max-w-[32rem]" default={flags} onChange={setFlags} placeholder="Flags" />
@@ -147,11 +150,12 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
                     <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">Upload</button>
 
                     {/* Message box */}
-                    {showMessage && <div className="m-auto ml-4">
+                    {/* {showMessage && <div className="m-auto ml-4">
                         <p>Message Box</p>
 
                         <a href="/chapters">Back</a>
-                    </div>}
+                    </div>} */}
+                    {showMessage && <MessageBox />}
 
                     {/* Error message */}
                     {error && <div className="m-auto ml-4">
