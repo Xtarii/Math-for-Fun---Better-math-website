@@ -57,7 +57,7 @@ export default function ImageInput(props: { default?: string, onChange?: (arg: s
                         <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                     </div>
-                    <input className="hidden" name="image" id="image" type="file" placeholder="Image" onChange={e => handleInput(e.target.files ? e.target.files[0] : null)} readOnly={props.readOnly} />
+                    {!props.readOnly && <input className="hidden" name="image" id="image" type="file" placeholder="Image" onChange={e => handleInput(e.target.files ? e.target.files[0] : null)} />}
                 </label>
                 {error && <div className="w-full">
                     <p className="ml-2 mt-2 text-red-500">{error}</p>
