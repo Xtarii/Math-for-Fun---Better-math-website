@@ -30,6 +30,20 @@ export const tables = {
     chapters: "Chapters",
 }
 
+/**
+ * Bucket names
+ *
+ * A list of all the buckets names
+ */
+export const buckets = {
+    /**
+     * Bucket for questions
+     *
+     * Stores question images
+     */
+    questions: "questions",
+}
+
 
 
 
