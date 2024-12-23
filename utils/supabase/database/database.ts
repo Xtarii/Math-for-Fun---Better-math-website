@@ -85,14 +85,14 @@ export async function updateQuestion(question: QuestionType) {
         answer: question.answer,
 
         // Creates image link
-        image: question.image ?
-            await storeImage(`${question.identifier.chapter}/${question.identifier.number}`, question.image)
-            : null,
+        // image: question.image ?
+        //     await storeImage(`${question.identifier.chapter}/${question.identifier.number}`, question.image)
+        //     : null,
         flags: question.flags,
 
-        difficulty: question.identifier.difficulty,
-        number: question.identifier.number,
-        chapter: question.identifier.chapter
+        // difficulty: question.identifier.difficulty,
+        // number: question.identifier.number,
+        // chapter: question.identifier.chapter
     }).eq("id", question.identifier.id);
     if(error) console.error(error); // DEBUG Error
 }
