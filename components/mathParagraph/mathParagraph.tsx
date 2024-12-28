@@ -31,5 +31,5 @@ export default function MathParagraph(props: { content: string, className?: stri
 
 
     // Math Text
-    return(<div className="h-full w-full" dangerouslySetInnerHTML={{ __html: html }} />);
+    return(<div className={props.className} dangerouslySetInnerHTML={{ __html: html }} />);
 }
