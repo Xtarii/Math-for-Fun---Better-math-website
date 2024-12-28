@@ -74,6 +74,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
     // Handles Editor submit request
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setError(undefined);
         setLoad(true);
 
 
@@ -150,12 +151,16 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
                     <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">Upload</button>
 
                     {/* Message box */}
-                    {/* {showMessage && <div className="m-auto ml-4">
-                        <p>Message Box</p>
+                    {showMessage && <MessageBox
+                        className="relative bg-white rounded-lg shadow dark:bg-gray-700"
 
-                        <a href="/chapters">Back</a>
-                    </div>} */}
-                    {showMessage && <MessageBox />}
+                        title="Uploaded question"
+                        message="The question was uploaded and can now be viewed"
+                    >
+                        <div className="flex">
+                            <a href="/chapters" className="text-blue-500">Back</a>
+                        </div>
+                    </MessageBox>}
 
                     {/* Error message */}
                     {error && <div className="m-auto ml-4">
