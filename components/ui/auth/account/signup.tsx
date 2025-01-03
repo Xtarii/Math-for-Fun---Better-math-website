@@ -1,3 +1,4 @@
+"use client"
 import LoadingWheel from "@/components/loading/wheel";
 import { useRouter } from "next/navigation";
 import { ReactElement, useState } from "react";

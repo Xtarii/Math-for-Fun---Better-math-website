@@ -1,3 +1,4 @@
+"use client"
 import LoadingWheel from "@/components/loading/wheel";
 import { login } from "@/utils/supabase/account/auth";
 import { useRouter } from "next/navigation";
