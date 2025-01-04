@@ -53,12 +53,40 @@ export async function signUp(username: string, email: string, password: string) 
             data: {
                 username
             },
-
-            emailRedirectTo: "https://mathspire.netlify.app/account/login",
         },
     });
     if(res.error) console.error(res.error);
     return res.data.user;
+}
+
+
+
+/**
+ * Verifies User Email
+ *
+ * @param email Email
+ * @param token Verify Token
+ * @returns User
+ */
+export async function verify(email: string, token: string) : Promise<User | null> {
+    const res = await client.auth.verifyOtp({ email, token, type: "signup" });
+    if(res.error) console.error(res.error);
+    return res.data.user;
+}
+
+
+
+/**
+ * Resend Verification Code to Account
+ *
+ * @param email Account Email
+ */
+export async function resendVerification(email: string) {
+    const { error } = await client.auth.resend({
+        type: 'signup',
+        email
+    });
+    if(error) console.error(error);
 }
 
 
