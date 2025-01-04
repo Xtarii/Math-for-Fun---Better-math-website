@@ -52,8 +52,10 @@ export async function signUp(username: string, email: string, password: string) 
         options: {
             data: {
                 username
-            }
-        }
+            },
+
+            emailRedirectTo: "https://mathspire.netlify.app/account/login",
+        },
     });
     if(res.error) console.error(res.error);
     return res.data.user;
