@@ -40,10 +40,33 @@ export default function Account() : ReactElement {
 
             <button onClick={async () => {
                 setLoad(true);
-                await signOut()
+                await signOut();
 
                 setLoad(false);
             }}>Sign Out</button>
+
+
+            <button onClick={async (e) => {
+                e.preventDefault();
+                if(!user) return;
+                setLoad(true);
+
+                // Deletes user
+                const response: { message: "success" | "error" } = await (await fetch('/api/account', {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: user.id }),
+                })).json();
+                if(response.message === "success") {
+                    await signOut("global");
+                    router.push("/account/login");
+                } else {
+                }
+
+                setLoad(false);
+            }}>Delete Account</button>
         </div>
     </div>);
 }
