@@ -1,8 +1,10 @@
 "use client"
 import LoadingWheel from "@/components/loading/wheel";
-import { signUp } from "@/utils/supabase/account/auth";
+import { resendVerification, signUp } from "@/utils/supabase/account/auth";
 import { useRouter } from "next/navigation";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import MessageBox from "../../forms/messages/messageBox";
+import { Button } from "@mui/material";
 
 /**
  * Sign Up Element for Supabase Authentication
@@ -12,13 +14,34 @@ export default function SignUp({ className } : { className?: string }) : ReactEl
 
     // States
     const [ load, setLoad ] = useState<boolean>(false);
+    const [ showMessage, setShowMessage ] = useState<boolean>(false);
     const [ error, setError ] = useState<string>();
+
+    const [ canResend, setCanResend ] = useState<boolean>(false);
+    const [ timeLeft, setTimeLeft ] = useState<number>(60); // Count down is 60 sec or 1 min
+    const [ countDown, setCountDown ] = useState<boolean>(false);
 
     const [ username, setUsername ] = useState<string>("");
     const [ email, setEmail ] = useState<string>("");
     const [ password, setPassword ] = useState<string>("");
 
 
+
+    // Count Down Handler
+    useEffect(() => {
+        if(!countDown) return; // Can only pass if there is an countdown
+        if(timeLeft <= 0) {
+            setCanResend(true);
+            setCountDown(false); // Stops countdown
+            return;
+        }
+        const timer = setTimeout(() => {
+            setTimeLeft((prev) => prev - 1);
+        }, 1000);
+
+        // Cleanup
+        return () => clearTimeout(timer);
+    }, [timeLeft, canResend, countDown])
 
     // Sign Up Handler
     const handleSignUp = async () => {
@@ -33,8 +56,13 @@ export default function SignUp({ className } : { className?: string }) : ReactEl
             return;
         }
 
-        // Redirect
-        router.push("/account/signup/confirm");
+
+        // Sign up message
+        setShowMessage(true);
+        setCanResend(false);
+        setCountDown(true); // Starts Count Down
+        setTimeLeft(60); // Reset to 1 min
+        setLoad(false);
     }
 
 
@@ -42,6 +70,31 @@ export default function SignUp({ className } : { className?: string }) : ReactEl
     // Sign Up Content
     return(<div className={className}>
         {load && <LoadingWheel />}
+        {showMessage && <MessageBox
+            className="relative w-96 bg-white rounded-lg shadow dark:bg-gray-700"
+            title="Confirm Email"
+            message='A verification mail has been sent to your email,
+                please verify your email address and login to your new account.'>
+
+            <div className="flex">
+                <p className="my-auto mr-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">{timeLeft} Sec</p>
+                <Button disabled={!canResend} onClick={async (e) => {
+                    e.preventDefault();
+                    setLoad(true);
+
+                    // Resend verification mail
+                    await resendVerification(email);
+
+                    // Resets countdown
+                    setCanResend(false);
+                    setCountDown(true); // Starts Count Down
+                    setTimeLeft(60); // Reset to 1 min
+                    setLoad(false);
+                }}>
+                    Resend mail
+                </Button>
+            </div>
+        </MessageBox>}
         <div className="w-full h-full bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8 w-full">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
