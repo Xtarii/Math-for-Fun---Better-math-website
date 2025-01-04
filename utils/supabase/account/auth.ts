@@ -39,6 +39,31 @@ export async function login(email: string, password: string) : Promise<User | nu
 
 
 /**
+ * Sign up to new User account
+ *
+ * @param username Username
+ * @param email Email
+ * @param password Password
+ * @returns User
+ */
+export async function signUp(username: string, email: string, password: string) : Promise<User | null> {
+    const res = await client.auth.signUp({
+        email, password,
+        options: {
+            data: {
+                username
+            },
+
+            emailRedirectTo: "https://mathspire.netlify.app/account/login",
+        },
+    });
+    if(res.error) console.error(res.error);
+    return res.data.user;
+}
+
+
+
+/**
  * Attempts to sign out of the user session
  *
  * ```local``` scope is this device - to
