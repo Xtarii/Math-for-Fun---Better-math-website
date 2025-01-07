@@ -34,6 +34,9 @@ export default function Content() : ReactElement {
             for(const item of items) {
                 if(!sorted[item.difficulty]) sorted[item.difficulty] = []; // Creates new List
                 sorted[item.difficulty].push(item);
+
+                // Sorts List after question number
+                sorted[item.difficulty].sort((a, b) => a.number - b.number);
             }
             setContent(sorted);
 
