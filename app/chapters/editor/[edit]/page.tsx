@@ -74,6 +74,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
     // Handles Editor submit request
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setError(undefined);
         setLoad(true);
 
 
@@ -105,57 +106,81 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
     // Editor Page
     return(<div>
         {load && <LoadingWheel />}
-        {!load && <div>
-            <form className="flex flex-wrap" onSubmit={handleSubmit}>
-                <div className="w-fit h-screen mx-2">
-                    <h1 className="text-xl text-center mx-auto">Required</h1>
+        {!load && <div className="w-screen h-fit flex">
+            <form className="m-auto flex flex-wrap w-full h-fit" onSubmit={handleSubmit}>
+                {/* Required inputs */}
+                <div className="w-fit h-fit mx-auto">
+                    {/* Header */}
+                    <div className="h-14 pt-4 mx-auto mb-4 border-b-2 border-slate-500">
+                        <h1 className="text-xl text-center mx-auto">Required</h1>
+                    </div>
+
+
 
                     {/* Inputs */}
-                    <div className="max-w-sm mr-auto ml-4 my-4">
-                        <ChapterSelector default={chapter} onChange={setChapter} readOnly={!newEdit} />
+                    <div className="flex">
+                        <div className="w-fit h-fit mt-7 mr-16">
+                            <div className="max-w-sm mr-auto ml-4 my-4">
+                                <ChapterSelector default={chapter} onChange={setChapter} readOnly={!newEdit} />
 
-                        <div className="grid gap-6 mb-6 md:grid-cols-2 mt-4">
-                            <div className="mb-5">
-                                <label htmlFor="difficulty" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
-                                <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="difficulty" id="difficulty" type="number" placeholder="Difficulty" value={difficulty} readOnly={!newEdit} onChange={e => setDifficulty(e.target.valueAsNumber)} required />
+                                <div className="grid gap-6 mb-6 md:grid-cols-2 mt-4">
+                                    <div className="mb-5">
+                                        <label htmlFor="difficulty" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
+                                        <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="difficulty" id="difficulty" type="number" placeholder="Difficulty" value={difficulty} readOnly={!newEdit} onChange={e => setDifficulty(e.target.valueAsNumber)} required />
+                                    </div>
+                                    <div className="mb-5">
+                                        <label htmlFor="number" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Number</label>
+                                        <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="number" id="number" type="number" placeholder="Number" value={number} readOnly={!newEdit} onChange={e => setNumber(e.target.valueAsNumber)} required />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="mb-5">
-                                <label htmlFor="number" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Number</label>
-                                <input className="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="number" id="number" type="number" placeholder="Number" value={number} readOnly={!newEdit} onChange={e => setNumber(e.target.valueAsNumber)} required />
+                        </div>
+                        <div className="w-fit h-fit">
+                            <div className="max-w-sm mr-auto ml-4 my-4">
+                                <h5 className="text-lg">Question</h5>
+                                <MathEditor className="w-[40rem] h-96 mb-16" default={question} onChange={setQuestion} />
+
+                                <h5 className="text-lg mt-16">Answer</h5>
+                                <MathEditor className="w-[40rem] h-96" default={answer} onChange={setAnswer} />
                             </div>
                         </div>
                     </div>
-                    <div className="max-w-sm mr-auto ml-4 my-4">
-                        <h5 className="text-lg">Question</h5>
-                        <MathEditor className="w-full h-64 mb-16" default={question} onChange={setQuestion} />
+                </div>
 
-                        <h5 className="text-lg mt-16">Answer</h5>
-                        <MathEditor className="w-full h-64" default={answer} onChange={setAnswer} />
+                {/* Optional */}
+                <div className="w-fit h-fit ml-auto">
+                    {/* Header */}
+                    <div className="bg-slate-900 h-14 pt-4 mb-4 rounded-bl-lg">
+                        <h1 className="text-xl text-center mx-auto">Optional</h1>
+                    </div>
+
+                    {/* Inputs */}
+                    <div className="mr-4">
+                        <ImageInput default={image} className="w-[32rem]" onChange={setImage} readOnly={!newEdit} />
+                        <div className="mt-10">
+                            <label htmlFor="flags" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Flags</label>
+                            <ListInput name="flags" id="flags" className="overflow-hidden max-w-[32rem]" default={flags} onChange={setFlags} placeholder="Flags" />
+                        </div>
                     </div>
                 </div>
 
-                <div className="w-fit h-screen mx-2">
-                    <h1 className="text-xl text-center mx-auto">Optional</h1>
 
 
-                    <ImageInput default={image} className="w-[32rem]" onChange={setImage} readOnly={!newEdit} />
-                    <div className="mt-10">
-                        <label htmlFor="flags" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Flags</label>
-                        <ListInput name="flags" id="flags" className="overflow-hidden max-w-[32rem]" default={flags} onChange={setFlags} placeholder="Flags" />
-                    </div>
-                </div>
-
-
+                {/* Submit panel */}
                 <div className="w-11/12 m-auto mt-0 mb-8 flex">
                     <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">Upload</button>
 
                     {/* Message box */}
-                    {/* {showMessage && <div className="m-auto ml-4">
-                        <p>Message Box</p>
+                    {showMessage && <MessageBox
+                        className="relative bg-white rounded-lg shadow dark:bg-gray-700"
 
-                        <a href="/chapters">Back</a>
-                    </div>} */}
-                    {showMessage && <MessageBox />}
+                        title="Uploaded question"
+                        message="The question was uploaded and can now be viewed"
+                    >
+                        <div className="flex">
+                            <a href="/chapters" className="text-blue-500">Back</a>
+                        </div>
+                    </MessageBox>}
 
                     {/* Error message */}
                     {error && <div className="m-auto ml-4">

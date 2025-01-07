@@ -10,11 +10,14 @@ import MathEditorMenu from "./menu/menu";
 // Style sheets
 import "katex/dist/katex.min.css";
 import "./tiptap.scss";
+import { Parse } from "./input/parser";
+import LoadingWheelLocal from "../ui/loadingbars/localWheel";
 
 /**
  * Math Text Editor
  */
-export default function MathEditor(props: { className?: string, onChange?: (arg: string) => void, default?: string }) : ReactElement {
+export default function MathEditor(props: { className?: string, onChange?: (arg: string) => void, default?: string, readonly?: boolean }) : ReactElement {
+    const canEdit = props.readonly === false || props.readonly === undefined;
     const [client, setClient] = useState<boolean>(false);
     useEffect(() => {
         setClient(true);
@@ -39,29 +42,12 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
         ],
         content: props.default,
         immediatelyRender: false,
+        editable: canEdit,
 
 
         // Updates text reference
         onUpdate: ({ editor }) => {
-            // Parse editor text
-            let str = "";
-            for(const obj of editor.getJSON().content || []) {
-                if(obj.content) {
-                    for(const content of obj.content) {
-                        let part = "";
-
-                        // Gets part data
-                        if(content.type === "text") part = content.text || ""
-                        else if(content.type === "inlineMath") part = "$" + content.attrs?.latex + "$";
-
-                        // Appends to string
-                        if(part.startsWith(" ") || content.type === "inlineMath") // Same line
-                            str += part;
-                        else str += "\n" + part; // New Line
-                    }
-                    str += "\n"; // New line after part
-                } else str += "\n"; // New line for empty paragraphs
-            }
+            const str = Parse.json(editor.getJSON());
             if(props.onChange) props.onChange(str); // Sets text to parsed string
         }
     });
@@ -70,12 +56,11 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
 
     // Component
     return(<div className={props.className}>
+        {!props.readonly && <MathEditorMenu editor={editor} />}
+
         <div className="w-full h-full shadow-md">
-            <MathEditorMenu editor={editor} />
-            {client && <EditorContent className="bg-slate-800 shadow-md w-full h-5/6 rounded-b-lg" editor={editor} />}
-            {!client && <div className="bg-slate-800 shadow-md w-full h-5/6 rounded-b-lg flex">
-                <p className="text-slate-400 m-auto text-center text-2xl">Loading Editor...</p>
-            </div>}
+            {client && <EditorContent className="bg-white dark:bg-slate-800 shadow-md w-full h-full rounded-b-lg" editor={editor} />}
+            {!client && <div className="bg-white dark:bg-slate-800 shadow-md w-full h-full rounded-b-lg flex"><LoadingWheelLocal /></div>}
         </div>
     </div>);
 }

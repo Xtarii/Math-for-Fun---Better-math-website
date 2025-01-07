@@ -42,7 +42,7 @@ export default function Question() : ReactElement {
             // Parses the question text
             const format: string[] = [];
             for(const part of res?.question.split("\n") || []) {
-                format.push(part || " ");
+                format.push(part);
             }
             setContentText(format);
             setLoad(false);

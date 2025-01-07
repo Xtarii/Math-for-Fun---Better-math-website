@@ -39,6 +39,59 @@ export async function login(email: string, password: string) : Promise<User | nu
 
 
 /**
+ * Sign up to new User account
+ *
+ * @param username Username
+ * @param email Email
+ * @param password Password
+ * @returns User
+ */
+export async function signUp(username: string, email: string, password: string) : Promise<User | null> {
+    const res = await client.auth.signUp({
+        email, password,
+        options: {
+            data: {
+                username
+            },
+        },
+    });
+    if(res.error) console.error(res.error);
+    return res.data.user;
+}
+
+
+
+/**
+ * Verifies User Email
+ *
+ * @param email Email
+ * @param token Verify Token
+ * @returns User
+ */
+export async function verify(email: string, token: string) : Promise<User | null> {
+    const res = await client.auth.verifyOtp({ email, token, type: "signup" });
+    if(res.error) console.error(res.error);
+    return res.data.user;
+}
+
+
+
+/**
+ * Resend Verification Code to Account
+ *
+ * @param email Account Email
+ */
+export async function resendVerification(email: string) {
+    const { error } = await client.auth.resend({
+        type: 'signup',
+        email
+    });
+    if(error) console.error(error);
+}
+
+
+
+/**
  * Attempts to sign out of the user session
  *
  * ```local``` scope is this device - to

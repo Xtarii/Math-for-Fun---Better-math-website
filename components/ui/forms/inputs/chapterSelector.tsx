@@ -44,6 +44,7 @@ export default function ChapterSelector(props: { default?: string, onChange?: (a
         setLoad(true);
         if(!search) {
             setSearchError("This can not be empty");
+            setLoad(false);
             return;
         }
 
@@ -115,7 +116,7 @@ export default function ChapterSelector(props: { default?: string, onChange?: (a
 
                 {/* Content */}
                 <div className="relative w-full h-fit max-h-5/6 flex flex-wrap overflow-y-auto">
-                    {load && <LoadingWheelLocal />}
+                    {load && <div className="w-full h-full absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2"><LoadingWheelLocal /></div>}
                     {content?.map((value, index) => <div className="w-full h-16 m-auto mb-0 rounded bg-white dark:bg-slate-500 flex hover:bg-gray-100 dark:hover:bg-slate-400 cursor-pointer" key={index} onClick={(e) => handleSelect(value.name)}>
                         <h1 className="m-auto ml-4 text-gray-900 dark:text-white text-center">{value.name}</h1>
                     </div>)}
