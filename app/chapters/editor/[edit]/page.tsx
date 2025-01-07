@@ -9,6 +9,7 @@ import { FormEvent, ReactElement, useEffect, useState } from "react";
 import ListInput from "@/components/ui/forms/inputs/listInput";
 import ImageInput from "@/components/ui/forms/inputs/imageInput";
 import MessageBox from "@/components/ui/forms/messages/messageBox";
+import { Button } from "@mui/material";
 
 export default function Edit({params} : { params: Promise<{ edit: "new" | string }> }) : ReactElement {
     const router = useRouter();
@@ -178,7 +179,8 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
                         message="The question was uploaded and can now be viewed"
                     >
                         <div className="flex">
-                            <a href="/chapters" className="text-blue-500">Back</a>
+                            <Button href="/chapters" color="info" variant="outlined">Back</Button>
+                            <Button href="/chapters/editor/new" color="inherit">New</Button>
                         </div>
                     </MessageBox>}
 
