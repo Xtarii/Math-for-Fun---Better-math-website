@@ -114,9 +114,7 @@ export default function Question() : ReactElement {
 
                 {/* DEBUG Message */}
                 {message && <div className="absolute bottom-2 right-2 flex w-fit max-w-96 min-h-16 bg-sky-900 rounded border border-2xl hover:opacity-20">
-                    <p className="m-auto p-10 pl-8 pr-8">
-                        {message}
-                    </p>
+                    <MathParagraph content={message} className="m-auto p-10 pl-8 pr-8" />
                 </div>}
             </div>
 
