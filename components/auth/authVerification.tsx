@@ -7,6 +7,8 @@ import { verify } from "@/utils/supabase/account/auth";
 
 /**
  * Authentication Verification Element
+ *
+ * Verifies account sign-up token
  */
 export default function AuthenticationVerification({ children, className } : { children?: ReactNode, className?: string }) : ReactElement {
     const router = useRouter();
