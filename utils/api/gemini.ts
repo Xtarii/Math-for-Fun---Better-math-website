@@ -27,7 +27,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash",
  */
 export async function generateFeedback(prompt: InputFormat) : Promise<OutputFormat> {
     // Adds format flags from question
-    const flags = Flags;
+    const flags = [...Flags];
     if(prompt.system.flags) for(const flag of prompt.system.flags) flags.push(flag);
     prompt.system.flags = flags; // Overrides flags
 
