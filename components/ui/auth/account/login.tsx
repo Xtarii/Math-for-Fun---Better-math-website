@@ -1,7 +1,7 @@
 "use client"
 import LoadingWheel from "@/components/loading/wheel";
 import { login } from "@/utils/supabase/account/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ReactElement, useState } from "react";
 
 /**
@@ -9,6 +9,10 @@ import { ReactElement, useState } from "react";
  */
 export default function Login({ className } : { className?: string }) : ReactElement {
     const router = useRouter();
+    const params = useSearchParams();
+
+    // Search Params for login
+    const redirect = params.get("redirect");
 
     // States
     const [ load, setLoad ] = useState<boolean>(false);
@@ -31,8 +35,8 @@ export default function Login({ className } : { className?: string }) : ReactEle
             return;
         }
 
-        // Redirect
-        router.push("/account");
+        // Redirect to redirect or account as default
+        router.push(redirect || "/account");
     }
 
 
