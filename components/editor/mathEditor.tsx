@@ -11,7 +11,7 @@ import MathEditorMenu from "./menu/menu";
 import "katex/dist/katex.min.css";
 import "./tiptap.scss";
 import { Parse } from "./input/parser";
-import LoadingWheelLocal from "../ui/loadingbars/localWheel";
+import LocalLoader from "../ui/load/localLoader";
 
 /**
  * Math Text Editor
@@ -60,7 +60,7 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
 
         <div className="w-full h-full shadow-md">
             {client && <EditorContent className="bg-white dark:bg-slate-800 shadow-md w-full h-full rounded-b-lg" editor={editor} />}
-            {!client && <div className="bg-white dark:bg-slate-800 shadow-md w-full h-full rounded-b-lg flex"><LoadingWheelLocal /></div>}
+            {!client && <div className="bg-white dark:bg-slate-800 shadow-md w-full h-full rounded-b-lg flex"><LocalLoader /></div>}
         </div>
     </div>);
 }

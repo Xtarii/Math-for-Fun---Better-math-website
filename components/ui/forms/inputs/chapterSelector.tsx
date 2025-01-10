@@ -2,7 +2,7 @@
 import { getChapters, insertChapter } from "@/utils/supabase/database/database";
 import { ChapterType } from "@/utils/supabase/types/types";
 import { ReactElement, useState } from "react";
-import LoadingWheelLocal from "../../loadingbars/localWheel";
+import LocalLoader from "../../load/localLoader";
 
 /**
  * Selection Menu for selecting chapters
@@ -116,7 +116,7 @@ export default function ChapterSelector(props: { default?: string, onChange?: (a
 
                 {/* Content */}
                 <div className="relative w-full h-fit max-h-5/6 flex flex-wrap overflow-y-auto">
-                    {load && <div className="w-full h-full absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2"><LoadingWheelLocal /></div>}
+                    {load && <div className="w-full h-full absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2"><LocalLoader /></div>}
                     {content?.map((value, index) => <div className="w-full h-16 m-auto mb-0 rounded bg-white dark:bg-slate-500 flex hover:bg-gray-100 dark:hover:bg-slate-400 cursor-pointer" key={index} onClick={(e) => handleSelect(value.name)}>
                         <h1 className="m-auto ml-4 text-gray-900 dark:text-white text-center">{value.name}</h1>
                     </div>)}

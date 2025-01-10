@@ -1,10 +1,10 @@
 "use client"
-import LoadingWheel from "@/components/loading/wheel";
 import { resendVerification, signUp } from "@/utils/supabase/account/auth";
 import { useRouter } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
 import MessageBox from "../../forms/messages/messageBox";
 import { Button } from "@mui/material";
+import Loader from "../../load/loader";
 
 /**
  * Sign Up Element for Supabase Authentication
@@ -69,7 +69,7 @@ export default function SignUp({ className } : { className?: string }) : ReactEl
 
     // Sign Up Content
     return(<div className={className}>
-        {load && <LoadingWheel />}
+        {load && <Loader />}
         {showMessage && <MessageBox
             className="relative w-96 bg-white rounded-lg shadow dark:bg-gray-700"
             title="Confirm Email"

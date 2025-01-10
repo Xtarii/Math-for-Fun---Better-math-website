@@ -1,11 +1,11 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
-import LoadingWheel from "@/components/loading/wheel";
 import { title } from "@/utils/config";
 import { getUser } from "@/utils/supabase/account/auth";
 import { QuestionIdentifierType } from "@/utils/supabase/types/types";
 import { getQuestionsOfChapter } from "@/utils/supabase/database/database";
+import Loader from "@/components/ui/load/loader";
 
 
 
@@ -52,7 +52,7 @@ export default function Content() : ReactElement {
 
     // Chapter Content Page
     return(<div className="min-h-screen">
-        {load && <LoadingWheel />}
+        {load && <Loader />}
 
 
         {/* Top Menu */}

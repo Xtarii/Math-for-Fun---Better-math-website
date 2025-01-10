@@ -1,16 +1,16 @@
 "use client";
 import { useParams } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
-import SubmitPanel from "@/components/submit/panel";
+import SubmitPanel from "@/components/ui/submit/panel";
 import { generateFeedback } from "@/utils/api/gemini";
-import LoadingWheel from "@/components/loading/wheel";
 import { QuestionType } from "@/utils/supabase/types/types";
-import ErrorMessage from "@/components/errors/message";
+import ErrorMessage from "@/components/ui/errors/message";
 import GeoGebra from "@/components/geogebra/geogebra";
 import { title } from "@/utils/config";
 import MathEditor from "@/components/editor/mathEditor";
 import MathParagraph from "@/components/mathParagraph/mathParagraph";
 import { getQuestionByID } from "@/utils/supabase/database/database";
+import Loader from "@/components/ui/load/loader";
 
 
 
@@ -53,7 +53,7 @@ export default function Question() : ReactElement {
 
     // Question Content Page
     return(<div className="min-h-screen">
-        {load && <LoadingWheel />}
+        {load && <Loader />}
 
 
         {/* Content */}

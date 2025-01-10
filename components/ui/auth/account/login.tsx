@@ -1,8 +1,8 @@
 "use client"
-import LoadingWheel from "@/components/loading/wheel";
 import { login } from "@/utils/supabase/account/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ReactElement, useState } from "react";
+import Loader from "../../load/loader";
 
 /**
  * Login Element for Supabase Authentication
@@ -43,7 +43,7 @@ export default function Login({ className } : { className?: string }) : ReactEle
 
     // Login Content
     return(<div className={className}>
-        {load && <LoadingWheel />}
+        {load && <Loader />}
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">

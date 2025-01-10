@@ -1,7 +1,6 @@
 "use client"
 import MathEditor from "@/components/editor/mathEditor";
 import ChapterSelector from "@/components/ui/forms/inputs/chapterSelector";
-import LoadingWheel from "@/components/loading/wheel";
 import { getUser } from "@/utils/supabase/account/auth";
 import { getQuestionByID, insertQuestion, updateQuestion } from "@/utils/supabase/database/database";
 import { useRouter } from "next/navigation";
@@ -10,6 +9,7 @@ import ListInput from "@/components/ui/forms/inputs/listInput";
 import ImageInput from "@/components/ui/forms/inputs/imageInput";
 import MessageBox from "@/components/ui/forms/messages/messageBox";
 import { Button } from "@mui/material";
+import Loader from "@/components/ui/load/loader";
 
 export default function Edit({params} : { params: Promise<{ edit: "new" | string }> }) : ReactElement {
     const router = useRouter();
@@ -106,7 +106,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
 
     // Editor Page
     return(<div>
-        {load && <LoadingWheel />}
+        {load && <Loader />}
         <div>
             {/* Small screens */}
             <div className="md:hidden w-screen h-screen">

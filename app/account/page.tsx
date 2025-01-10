@@ -1,6 +1,6 @@
 "use client"
-import LoadingWheel from "@/components/loading/wheel";
 import MessageBox from "@/components/ui/forms/messages/messageBox";
+import Loader from "@/components/ui/load/loader";
 import { getUser, signOut } from "@/utils/supabase/account/auth";
 import { Button } from "@mui/material";
 import { User } from "@supabase/supabase-js";
@@ -34,7 +34,7 @@ export default function Account() : ReactElement {
 
     // Page Content
     return(<div>
-        {load && <LoadingWheel />}
+        {load && <Loader />}
         {error && <MessageBox
             className="relative bg-white rounded-lg shadow dark:bg-gray-700"
             title="Invalid Request"

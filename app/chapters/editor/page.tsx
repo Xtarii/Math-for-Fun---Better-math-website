@@ -1,5 +1,5 @@
 "use client"
-import LoadingWheel from "@/components/loading/wheel";
+import Loader from "@/components/ui/load/loader";
 import { getUser } from "@/utils/supabase/account/auth";
 import { useRouter } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
@@ -23,7 +23,7 @@ export default function Editor() : ReactElement {
 
     // Content
     return(<div>
-        {load && <LoadingWheel />}
+        {load && <Loader />}
         <button onClick={() => router.push("/chapters/editor/new")}>New</button>
     </div>);
 }
