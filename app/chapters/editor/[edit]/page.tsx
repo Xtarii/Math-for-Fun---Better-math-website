@@ -10,6 +10,7 @@ import ImageInput from "@/components/ui/forms/inputs/imageInput";
 import MessageBox from "@/components/ui/forms/messages/messageBox";
 import { Button } from "@mui/material";
 import Loader from "@/components/ui/load/loader";
+import DeviceSupport from "@/components/devices/deviceSupport";
 
 export default function Edit({params} : { params: Promise<{ edit: "new" | string }> }) : ReactElement {
     const router = useRouter();
@@ -107,23 +108,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
     // Editor Page
     return(<div>
         {load && <Loader />}
-        <div>
-            {/* Small screens */}
-            <div className="md:hidden w-screen h-screen">
-                <div className="w-full h-fit flex flex-wrap">
-                    <h2 className="w-full text-center mb-4 mt-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">
-                        Din enhet stödjs inte.
-                    </h2>
-                    <div className="w-full">
-                        <p className="text-center">Din enhets skärm är för liten för denna editerare, använd en dator.</p>
-                        <div className="ml-36">
-                            <Button variant="outlined" color="info" href="/chapters">Tillbaka</Button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Editor Page : Only for Bigger screens */}
+        <DeviceSupport className="w-screen h-screen">
             {!load && <div className="hidden md:block w-screen h-fit flex">
                 <form className="m-auto flex flex-wrap w-full h-fit" onSubmit={handleSubmit}>
                     {/* Required inputs */}
@@ -208,6 +193,6 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
                     </div>
                 </form>
             </div>}
-        </div>
+        </DeviceSupport>
     </div>);
 }
