@@ -1,6 +1,14 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  // Material UI
+  corePlugins: {
+    preflight: false,
+  },
+  important: '#__next',
+
+
+  // Tailwind Config
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
