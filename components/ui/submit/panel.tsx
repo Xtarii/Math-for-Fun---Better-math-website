@@ -1,5 +1,6 @@
 "use client";
 import { getQuestionByID, getQuestionsOfChapter } from "@/utils/supabase/database/database";
+import { Button } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import { MouseEvent, ReactElement } from "react";
 
@@ -32,9 +33,11 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
     // Panel Object
     return(<div className="flex flex-wrap w-96 m-auto">
         <div className="w-full inline-flex justify-center">
-            <button
-                type="button"
-                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-l-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+            <Button
+                className="rounded-l-lg px-5 py-2.5 me-2 mb-2"
+                variant="contained"
+                color="error"
+
                 onClick={(e) => {
                     e.preventDefault();
                     router.push(`/chapters/${chap}/`); // Back to home
@@ -43,21 +46,15 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9h13a5 5 0 0 1 0 10H7M3 9l4-4M3 9l4 4"/>
                 </svg>
-            </button>
-            <button
-                type="button"
-                className="justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-24 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-
-                // Events
-                onClick={props.onClick}
-            >
+            </Button>
+            <Button className="justify-center px-16 py-2.5 me-2 mb-2" variant="contained" color="success" onClick={props.onClick}>
                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                 </svg>
-            </button>
-            <button
-                type="button"
-                className="text-white bg-blue-var3 hover:bg-blue-var focus:ring-4 focus:ring-blue-var2 font-medium rounded-r-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-var dark:hover:bg-blue-var-hover focus:outline-none dark:focus:ring-blue-var3"
+            </Button>
+            <Button
+                className="rounded-r-lg px-5 py-2.5 me-2 mb-2"
+                variant="contained"
 
                 onClick={async (e) => {
                     e.preventDefault();
@@ -80,7 +77,7 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
                 </svg>
-            </button>
+            </Button>
         </div>
 
         {/* Score Bar */}
