@@ -2,7 +2,7 @@
 import MessageBox from "@/components/ui/forms/messages/messageBox";
 import Loader from "@/components/ui/load/loader";
 import { getUser, signOut } from "@/utils/supabase/account/auth";
-import { Button } from "@mui/material";
+import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, useColorScheme } from "@mui/material";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
@@ -12,6 +12,10 @@ export default function Account() : ReactElement {
     const [ load, setLoad ] = useState<boolean>(true);
     const [ user, setUser ] = useState<User>();
     const [ error, setError ] = useState<boolean>(false);
+
+    const [ isClient, setIsClient ] = useState<boolean>(false);
+    const { mode, setMode } = useColorScheme();
+
 
 
     // Account Data
@@ -28,7 +32,11 @@ export default function Account() : ReactElement {
             setUser(user);
             setLoad(false);
         })()
-    })
+
+
+
+        setIsClient(true); // Client test
+    }, [])
 
 
 
@@ -89,5 +97,27 @@ export default function Account() : ReactElement {
                 </div>
             </div>
         </div>
+
+
+
+
+
+        {/* Theme TEST */}
+        {isClient && <FormControl>
+            <FormLabel id="demo-theme-toggle">Theme</FormLabel>
+            <RadioGroup
+            aria-labelledby="demo-theme-toggle"
+            name="theme-toggle"
+            row
+            value={mode}
+            onChange={(event) =>
+                setMode(event.target.value as 'system' | 'light' | 'dark')
+            }
+            >
+                <FormControlLabel value="system" control={<Radio />} label="System" />
+                <FormControlLabel value="light" control={<Radio />} label="Light" />
+                <FormControlLabel value="dark" control={<Radio />} label="Dark" />
+            </RadioGroup>
+        </FormControl>}
     </div>);
 }

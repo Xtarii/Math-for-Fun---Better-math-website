@@ -1,5 +1,5 @@
 import { createTheme, Theme as T } from "@mui/material";
-import { blueGrey, grey, teal } from "@mui/material/colors";
+import { teal } from "@mui/material/colors";
 
 /**
  * Creates Theme Object
@@ -9,17 +9,12 @@ import { blueGrey, grey, teal } from "@mui/material/colors";
  */
 export function Theme(dark: boolean) : T {
     return createTheme({
+        colorSchemes: {
+            dark
+        },
+
+        // Color Configuration
         palette: {
-            // Site Theme Mode
-            mode: dark ? "dark" : "light",
-            background: {
-                default: dark ? blueGrey[900] : grey[50],
-                paper: dark ? blueGrey[900] : grey[50]
-            },
-
-
-
-            // Color Configuration
             success: teal
         }
     })
