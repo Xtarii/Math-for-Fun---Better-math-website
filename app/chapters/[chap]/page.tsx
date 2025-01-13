@@ -6,8 +6,7 @@ import { getUser } from "@/utils/supabase/account/auth";
 import { QuestionIdentifierType } from "@/utils/supabase/types/types";
 import { getQuestionsOfChapter } from "@/utils/supabase/database/database";
 import Loader from "@/components/ui/load/loader";
-
-
+import DifficultyMeter from "@/components/ui/meter/difficultyMeter";
 
 export default function Content() : ReactElement {
     const router = useRouter();
@@ -97,14 +96,7 @@ export default function Content() : ReactElement {
                                 </svg>
                             </button>
                         </div>}
-
-                        <div className="m-auto mx-4 rounded-full size-7 flex shadow" style={{
-                            backgroundColor: value.difficulty === 1 ? "#00B4A3" :
-                            value.difficulty === 2 ? "#00CC99" :
-                            value.difficulty === 3 ? "#008080" : "#603990"
-                        }}>
-                            <p className="m-auto text-center text-gray-900">{value.difficulty}</p>
-                        </div>
+                        <DifficultyMeter className="m-auto mx-4 size-7" value={value.difficulty} />
                     </div>
                 </div>)}
             </div>

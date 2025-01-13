@@ -11,8 +11,7 @@ import MathEditor from "@/components/editor/mathEditor";
 import MathParagraph from "@/components/mathParagraph/mathParagraph";
 import { getQuestionByID } from "@/utils/supabase/database/database";
 import Loader from "@/components/ui/load/loader";
-
-
+import DifficultyMeter from "@/components/ui/meter/difficultyMeter";
 
 export default function Question() : ReactElement {
     const params = useParams();
@@ -72,13 +71,8 @@ export default function Question() : ReactElement {
                     <div className="flex m-auto mt-4">
                         <div className="absolute right-2 top-2 flex w-40">
                             <p className="m-auto ml-4">Upg. {content.identifier.number}</p>
-                            <div className="m-auto mr-4 justify-self-right rounded-full size-7 flex shadow" style={{
-                                backgroundColor: content.identifier.difficulty === 1 ? "#00B4A3" :
-                                content.identifier.difficulty === 2 ? "#00CC99" :
-                                content.identifier.difficulty === 3 ? "#008080" : "#603990"
-                            }}>
-                                <p className="m-auto text-lg text-center text-gray-900">{content.identifier.difficulty}</p>
-                            </div>
+
+                            <DifficultyMeter className="m-auto mr-4 justify-self-right size-7" value={content.identifier.difficulty} />
                         </div>
                         {content.image && <img className="m-auto mt-4 w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
                     </div>
