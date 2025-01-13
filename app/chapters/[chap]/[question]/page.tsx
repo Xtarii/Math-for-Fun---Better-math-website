@@ -53,8 +53,8 @@ export default function Question() : ReactElement {
     // Question Content Page
     return(<div className="min-h-screen">
         {load && <Loader />}
-        {content && <div className="flex w-screen h-fit">
-            <div className="w-3/5 h-fit">
+        {content && <div className="flex flex-wrap md:flex-nowrap w-screen h-fit">
+            <div className="w-full md:w-3/5 h-fit">
                 <div className="relative flex">
                     <div className="flex m-auto mt-4">
                         <div className="absolute right-2 top-2 flex w-40">
@@ -64,7 +64,7 @@ export default function Question() : ReactElement {
                     </div>
                 </div>
                 <div className="flex flex-wrap w-full h-fit">
-                    <div className="w-full flex">
+                    <div className="w-full flex flex-wrap md:flex-nowrap">
                         <div className="flex mt-4 w-full">
                             <div className="ml-4">
                                 {contentText?.map((value, index) =>
@@ -74,15 +74,15 @@ export default function Question() : ReactElement {
                                 )}
                             </div>
                         </div>
-                        <div className="justify-end mt-12 mx-4">
-                            {content.image && <img className="m-auto mt-4 w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
+                        <div className="md:justify-end m-auto md:mx-4 my-12">
+                            {content.image && <img className="m-auto md:mt-4 w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
                         </div>
                     </div>
                     <div className="w-full h-fit">
                         <div className="flex flex-wrap w-full h-fit">
                             <div className="w-full h-fit">
                                 <div className="h-fit mb-20">
-                                    <MathEditor className="w-full h-[35rem]" onChange={setText} />
+                                    <MathEditor className="w-full h-[20rem] md:h-[35rem]" onChange={setText} />
                                 </div>
 
                                 <div className="w-full h-40 bg-slate-800 m-auto flex">
@@ -122,7 +122,7 @@ export default function Question() : ReactElement {
 
 
 
-            <div className="sticky h-fit w-2/5 top-0 end-0">
+            <div className="sticky hidden md:block h-fit w-full md:w-2/5 top-0 end-0">
                 <GeoGebra className="h-screen w-full flex" width={window.innerWidth * 0.38} />
             </div>
         </div>}

@@ -29,7 +29,9 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
     const editor = useEditor({
         extensions: [
             StarterKit,
-            Placeholder,
+            Placeholder.configure({
+                placeholder: "Skriv här ..."
+            }),
             MathExtension.configure({
                 // evaluation: true, // Solves the math problem
                 addInlineMath: true
