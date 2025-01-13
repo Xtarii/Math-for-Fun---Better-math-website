@@ -3,24 +3,12 @@ import { getQuestionByID, getQuestionsOfChapter } from "@/utils/supabase/databas
 import { Button } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import { MouseEvent, ReactElement } from "react";
+import ScoreMeter from "../meter/scoreMeter";
 
 /**
  * Submit Panel Element
  */
 export default function SubmitPanel(props: {status: number, onClick?: (event: MouseEvent<Element>) => void}) : ReactElement {
-    // Color Picker
-    const getColor = (status: number): string => {
-        if (status <= 25) return "#9b0000";
-        if (status <= 40) return "#de0c78";
-        if (status <= 50) return "#bb2693";
-        if (status <= 65) return "#0c26ca";
-        if (status <= 80) return "#4d64f4";
-        if (status <= 90) return "#1181c4";
-        return "#72c2f2";
-    };
-    const color = getColor(props.status);
-
-    // Router
     const router = useRouter();
 
     // Question Data
@@ -80,15 +68,6 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
                 </svg>
             </Button>
         </div>
-
-        {/* Score Bar */}
-        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-            <div className="h-2.5 rounded-full transition-all duration-700 ease-in-out" style={{
-                width: `${props.status}%`,
-                backgroundColor: color,
-
-                transitionProperty: "width, background-color"
-            }}></div>
-        </div>
+        <ScoreMeter className="w-full h-2.5" value={props.status} />
     </div>);
 }
