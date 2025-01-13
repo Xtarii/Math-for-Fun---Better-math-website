@@ -1,7 +1,9 @@
 "use client"; // To use states
+import LoginVerifier from "@/components/auth/loginVerifier";
 import Loader from "@/components/ui/load/loader";
 import { getChapters } from "@/utils/supabase/database/database";
 import { ChapterType } from "@/utils/supabase/types/types";
+import { Button } from "@mui/material";
 import { ReactElement, useEffect, useState } from "react";
 
 export default function Chapters() : ReactElement {
@@ -28,5 +30,11 @@ export default function Chapters() : ReactElement {
                 <h5 className="text-2xl m-auto text-white">{value.name}</h5>
             </a>
         </div>)}
+
+
+
+        <LoginVerifier className="m-auto">
+            <Button variant="outlined" href="/chapters/editor">Editeraren</Button>
+        </LoginVerifier>
     </div>);
 }
