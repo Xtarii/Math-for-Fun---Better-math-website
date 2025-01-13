@@ -20,7 +20,10 @@ export default function Question() : ReactElement {
 
     // States
     const [ load, setLoad ] = useState(true);
+
     const [ showGeoGebra, setShowGeoGebra ] = useState<boolean>(false);
+    const [ compactMode, setCompactMode ] = useState<boolean>(false);
+
     const [ content, setContent ] = useState<QuestionType>();
     const [ contentText, setContentText ] = useState<string[]>();
 
@@ -49,6 +52,7 @@ export default function Question() : ReactElement {
             setLoad(false);
         })();
         setShowGeoGebra(window.innerWidth < 768);
+        setCompactMode(window.innerWidth < 768);
     }, [question]);
 
 
@@ -70,7 +74,7 @@ export default function Question() : ReactElement {
                         </div>
                     </div>
                 </div>
-                {showGeoGebra && <div className="flex flex-wrap w-full h-fit">
+                {(showGeoGebra || !compactMode) && <div className="flex flex-wrap w-full h-fit">
                     <div className="w-full flex flex-wrap md:flex-nowrap">
                         <div className="flex mt-4 w-full">
                             <div className="ml-4">
