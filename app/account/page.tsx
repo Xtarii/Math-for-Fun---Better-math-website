@@ -104,9 +104,9 @@ export default function Account() : ReactElement {
 
         {/* Theme TEST */}
         {isClient && <FormControl>
-            <FormLabel id="demo-theme-toggle">Theme</FormLabel>
+            <FormLabel id="theme-toggle">Theme</FormLabel>
             <RadioGroup
-            aria-labelledby="demo-theme-toggle"
+            aria-labelledby="theme-toggle"
             name="theme-toggle"
             row
             value={mode}
