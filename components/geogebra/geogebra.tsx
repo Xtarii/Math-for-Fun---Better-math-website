@@ -1,5 +1,6 @@
 "use client";
 import { ReactElement, useEffect } from "react";
+import "./style.css";
 
 /**
  * GeoGebra Element
@@ -32,6 +33,6 @@ export default function GeoGebra(props: { className?: string }) : ReactElement {
 
     // Holder
     return(<div className={props.className + "flex"}>
-        <div className="w-full h-full m-auto" id="ggb-element" />
+        <div className="w-full h-full m-auto p-0" id="ggb-element" />
     </div>);
 }
