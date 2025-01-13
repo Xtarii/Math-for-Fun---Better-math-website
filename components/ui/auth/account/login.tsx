@@ -6,6 +6,12 @@ import Loader from "../../load/loader";
 
 /**
  * Login Element for Supabase Authentication
+ *
+ * If there is a ```redirect``` parameter
+ * in the search url this login will result
+ * in a redirection to that page.
+ * ##### Example URL:
+ * ```account/login?redirect=/chapters```
  */
 export default function Login({ className } : { className?: string }) : ReactElement {
     const router = useRouter();
