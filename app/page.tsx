@@ -1,4 +1,3 @@
-"use client"
 import AuthenticationVerification from "@/components/auth/authVerification";
 import Loader from "@/components/ui/load/loader";
 import { Suspense } from "react";
