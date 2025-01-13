@@ -122,8 +122,8 @@ export default function Question() : ReactElement {
 
 
 
-            <div className="fixed h-fit w-2/5 bottom-0 end-0">
-                <GeoGebra className="h-screen w-full p-0" />
+            <div className="sticky h-fit w-2/5 top-0 end-0">
+                <GeoGebra className="h-screen w-full flex" width={window.innerWidth * 0.38} />
             </div>
         </div>}
 

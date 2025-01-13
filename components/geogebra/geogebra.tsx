@@ -1,11 +1,10 @@
 "use client";
 import { ReactElement, useEffect } from "react";
-import "./style.css";
 
 /**
  * GeoGebra Element
  */
-export default function GeoGebra(props: { className?: string }) : ReactElement {
+export default function GeoGebra(props: { className?: string, width?: number, height?: number }) : ReactElement {
     // Loads GeoGebra
     useEffect(() => {
         const script = document.createElement("script");
@@ -19,10 +18,13 @@ export default function GeoGebra(props: { className?: string }) : ReactElement {
                 name: "graphing",
                 showToolbar: true,
                 showAlgebraInput: true,
-                showMenuBar: true
+                showMenuBar: true,
+
+                width: props.width || window.innerWidth,
+                height: props.height || window.innerHeight
             }
             const applet = new window.GGBApplet(params, true);
-            applet.inject('ggb-element'); // Inserts Instance to element
+            applet.inject("ggb-element"); // Inserts Instance to element
         };
 
         // Adds to body and returns Dispose function
@@ -32,7 +34,7 @@ export default function GeoGebra(props: { className?: string }) : ReactElement {
 
 
     // Holder
-    return(<div className={props.className + "flex"}>
-        <div className="w-full h-full m-auto p-0" id="ggb-element" />
+    return(<div className={props.className}>
+        <div className="max-w-full max-h-full m-auto" id="ggb-element" />
     </div>);
 }
