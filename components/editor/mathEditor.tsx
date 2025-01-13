@@ -42,7 +42,7 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
                 }
             }),
         ],
-        content: props.default,
+        content: Parse.toParagraphText(props.default),
         immediatelyRender: false,
         editable: canEdit,
 

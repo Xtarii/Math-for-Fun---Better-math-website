@@ -12,6 +12,7 @@ import MathParagraph from "@/components/mathParagraph/mathParagraph";
 import { getQuestionByID } from "@/utils/supabase/database/database";
 import Loader from "@/components/ui/load/loader";
 import DifficultyMeter from "@/components/ui/meter/difficultyMeter";
+import { Button } from "@mui/material";
 
 export default function Question() : ReactElement {
     const params = useParams();
@@ -19,6 +20,7 @@ export default function Question() : ReactElement {
 
     // States
     const [ load, setLoad ] = useState(true);
+    const [ showGeoGebra, setShowGeoGebra ] = useState<boolean>(false);
     const [ content, setContent ] = useState<QuestionType>();
     const [ contentText, setContentText ] = useState<string[]>();
 
@@ -46,6 +48,7 @@ export default function Question() : ReactElement {
             setContentText(format);
             setLoad(false);
         })();
+        setShowGeoGebra(window.innerWidth < 768);
     }, [question]);
 
 
@@ -56,6 +59,10 @@ export default function Question() : ReactElement {
         {content && <div className="flex flex-wrap md:flex-nowrap w-screen h-fit">
             <div className="w-full md:w-3/5 h-fit">
                 <div className="relative flex">
+                    <div className="md:hidden justify-start mx-2 my-2">
+                        <Button onClick={() => setShowGeoGebra(prev => !prev)}>GeoGebra</Button>
+                    </div>
+
                     <div className="flex m-auto mt-4">
                         <div className="absolute right-2 top-2 flex w-40">
                             <p className="m-auto ml-4">Upg. {content.identifier.number}</p>
@@ -63,7 +70,7 @@ export default function Question() : ReactElement {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-wrap w-full h-fit">
+                {showGeoGebra && <div className="flex flex-wrap w-full h-fit">
                     <div className="w-full flex flex-wrap md:flex-nowrap">
                         <div className="flex mt-4 w-full">
                             <div className="ml-4">
@@ -82,9 +89,8 @@ export default function Question() : ReactElement {
                         <div className="flex flex-wrap w-full h-fit">
                             <div className="w-full h-fit">
                                 <div className="h-fit mb-20">
-                                    <MathEditor className="w-full h-[20rem] md:h-[35rem]" onChange={setText} />
+                                    <MathEditor className="w-full h-[20rem] md:h-[35rem]" onChange={setText} default={text} />
                                 </div>
-
                                 <div className="w-full h-40 bg-slate-800 m-auto flex">
                                     <SubmitPanel status={score} onClick={e => {
                                         e.preventDefault();
@@ -117,13 +123,10 @@ export default function Question() : ReactElement {
                             <MathParagraph content={message} className="m-auto p-10 pl-8 pr-8" />
                         </div>}
                     </div>
-                </div>
+                </div>}
             </div>
-
-
-
-            <div className="sticky hidden md:block h-fit w-full md:w-2/5 top-0 end-0">
-                <GeoGebra className="h-screen w-full flex" width={window.innerWidth * 0.38} />
+            <div hidden={showGeoGebra} className="absolute md:sticky h-fit w-full md:w-2/5 top-6 md:top-0 end-0">
+                <GeoGebra className="h-screen w-full flex" width={window.innerWidth >= 768 ? window.innerWidth * 0.38 : window.innerWidth} height={window.innerWidth >= 768 ? window.innerHeight : window.innerHeight * 0.945} />
             </div>
         </div>}
 
