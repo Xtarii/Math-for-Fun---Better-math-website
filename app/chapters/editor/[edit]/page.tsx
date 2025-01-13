@@ -182,7 +182,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
                             message="The question was uploaded and can now be viewed"
                         >
                             <div className="flex">
-                                <Button href="/chapters" color="info" variant="outlined">Back</Button>
+                                <Button href="/chapters" color="info" className="mr-2" variant="outlined">Back</Button>
                                 <Button href="/chapters/editor/new" color="inherit">New</Button>
                             </div>
                         </MessageBox>}
