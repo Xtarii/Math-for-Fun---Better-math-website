@@ -1,7 +1,6 @@
 "use client"
 import MathEditor from "@/components/editor/mathEditor";
 import ChapterSelector from "@/components/ui/forms/inputs/chapterSelector";
-import { getUser } from "@/utils/supabase/account/auth";
 import { getQuestionByID, insertQuestion, updateQuestion } from "@/utils/supabase/database/database";
 import { useRouter } from "next/navigation";
 import { FormEvent, ReactElement, useEffect, useState } from "react";
@@ -11,6 +10,7 @@ import MessageBox from "@/components/ui/forms/messages/messageBox";
 import { Button } from "@mui/material";
 import Loader from "@/components/ui/load/loader";
 import DeviceSupport from "@/components/devices/deviceSupport";
+import LoginVerifier from "@/components/auth/loginVerifier";
 
 export default function Edit({params} : { params: Promise<{ edit: "new" | string }> }) : ReactElement {
     const router = useRouter();
@@ -34,7 +34,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
     // Data fetching
     useEffect(() => {
         (async () => {
-            if(!await getUser()) router.push("/account/login"); // Redirects non login users
+            // if(!await getUser()) router.push("/account/login"); // Redirects non login users
             const edit = (await params).edit; // Gets the edit
             if(edit === "new") {
                 setNewEdit(true);
@@ -108,8 +108,9 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
     // Editor Page
     return(<div className="w-full h-fit min-h-screen">
         {load && <Loader />}
+        <LoginVerifier redirect="this" />
         <DeviceSupport className="w-full h-fit">
-            {!load && <div className="hidden md:block w-screen h-fit flex">
+            {!load && <div className="hidden w-screen h-fit md:flex">
                 <form className="m-auto flex flex-wrap w-full h-fit" onSubmit={handleSubmit}>
                     {/* Required inputs */}
                     <div className="w-fit h-fit mx-auto">
