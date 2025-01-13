@@ -92,4 +92,23 @@ export namespace Parse {
         else
             return `$${math.latex}$`;
     }
+
+
+
+
+
+    /**
+     * Parse text back to paragraph text
+     *
+     * @param text Text to parse
+     * @returns Text as Paragraph
+     */
+    export function toParagraphText(text: string | undefined) : string | null {
+        if(!text) return null;
+        let paragraphs = "";
+
+        // Parse back to Paragraphs text
+        for(const part of text.split("\n")) if(part !== "") paragraphs += `<p>${part}<p/>`;
+        return paragraphs;
+    }
 }
