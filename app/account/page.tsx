@@ -1,8 +1,9 @@
 "use client"
 import MessageBox from "@/components/ui/forms/messages/messageBox";
 import Loader from "@/components/ui/load/loader";
+import ThemeSelector from "@/components/ui/theme/themeSelector";
 import { getUser, signOut } from "@/utils/supabase/account/auth";
-import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, useColorScheme } from "@mui/material";
+import { Button } from "@mui/material";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { ReactElement, useEffect, useState } from "react";
@@ -14,7 +15,6 @@ export default function Account() : ReactElement {
     const [ error, setError ] = useState<boolean>(false);
 
     const [ isClient, setIsClient ] = useState<boolean>(false);
-    const { mode, setMode } = useColorScheme();
 
 
 
@@ -103,21 +103,6 @@ export default function Account() : ReactElement {
 
 
         {/* Theme TEST */}
-        {isClient && <FormControl>
-            <FormLabel id="theme-toggle">Theme</FormLabel>
-            <RadioGroup
-            aria-labelledby="theme-toggle"
-            name="theme-toggle"
-            row
-            value={mode}
-            onChange={(event) =>
-                setMode(event.target.value as 'system' | 'light' | 'dark')
-            }
-            >
-                <FormControlLabel value="system" control={<Radio />} label="System" />
-                <FormControlLabel value="light" control={<Radio />} label="Light" />
-                <FormControlLabel value="dark" control={<Radio />} label="Dark" />
-            </RadioGroup>
-        </FormControl>}
+        {isClient && <ThemeSelector className="" />}
     </div>);
 }
