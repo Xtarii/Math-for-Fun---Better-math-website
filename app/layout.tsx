@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
-  return (<html lang="sv">
+  return (<html lang="en">
     <StyledEngineProvider injectFirst>
       <Theme>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
