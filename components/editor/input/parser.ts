@@ -108,7 +108,13 @@ export namespace Parse {
         let paragraphs = "";
 
         // Parse back to Paragraphs text
-        for(const part of text.split("\n")) if(part !== "") paragraphs += `<p>${part}<p/>`;
+        for(let x = 0; x < text.split("\n").length; x++) {
+            const part = text.split("\n")[x];
+
+            if(part !== "") paragraphs += `<p>${part}<p/>`;
+            else if(part === "" && x < text.split("\n").length && text.split("\n")[x + 1] === "")
+                paragraphs += "<p></p>";
+        }
         return paragraphs;
     }
 }
