@@ -85,17 +85,19 @@ export default function Question() : ReactElement {
                                 )}
                             </div>
                         </div>
-                        <div className="md:justify-end m-auto md:mx-4 my-12">
-                            {content.image && <img className="m-auto md:mt-4 w-96 max-h-96 rounded" src={content.image} alt={content.image} />}
+                        <div className="md:justify-end m-auto md:mx-4 my-12 z-10">
+                            <div className="relative w-fit h-fit m-auto md:mt-4">
+                                {content.image && <img className="w-96 max-h-96 rounded shadow-md hover:scale-[2.3] hover:transform hover:-translate-x-1/2 hover:translate-y-2/4 transition-all duration-500 ease-in-out" src={content.image} alt={content.image} />}
+                            </div>
                         </div>
                     </div>
                     <div className="w-full h-fit">
                         <div className="flex flex-wrap w-full h-fit">
-                            <div className="w-full h-fit">
+                            <div className="relative w-full h-fit">
                                 <div className="h-fit mb-20">
                                     <MathEditor className="w-full h-[20rem] md:h-[35rem]" onChange={setText} default={text} />
                                 </div>
-                                <div className="w-full h-40 bg-slate-800 m-auto flex">
+                                <div className="sticky w-full h-40 bg-slate-800 m-auto flex bottom-0">
                                     <SubmitPanel status={score} onClick={e => {
                                         e.preventDefault();
                                         setLoad(true); // Starts Spinning Wheel
