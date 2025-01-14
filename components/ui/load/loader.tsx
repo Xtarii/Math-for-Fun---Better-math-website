@@ -11,7 +11,7 @@ import { ReactElement } from "react";
 export default function Loader() : ReactElement {
     return(<div className="fixed inset-0 bg-black bg-opacity-50 pointer-events-auto z-50">
         <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2">
-            <LinearProgress className="w-96" color="info" />
+            <LinearProgress className="md:w-96 w-52" color="info" />
         </div>
     </div>);
 }
