@@ -71,35 +71,37 @@ export default function Content() : ReactElement {
 
 
         {/* Actual Site Content */}
-        {content && Object.values(content).map((value, index) => <div key={index}>
-            <div className="w-24" key={index}>
-                <div className="w-96 h-8 bg-slate-700 rounded">
-                    <p className="text-center text-2xl">Level: {Object.keys(content)[index]}</p>
-                </div>
-
-
-                {value.map((value, index) => <div className="flex w-96 bg-slate-800 h-16 rounded hover:bg-slate-500" key={index}>
-                    <a href={`/chapters/${chap}/${value.id}/`} className="flex w-full h-full">
-                        <div className="m-auto ml-4">
-                            <p>Upg. {value.number}</p>
-                        </div>
-                    </a>
-                    <div className="m-auto h-full max-w-[8rem] w-fit justify-self-right flex">
-                        {auth && <div className="m-auto ml-4">
-                            <button onClick={async () => {
-                                setLoad(true);
-                                router.push(`/chapters/editor/${value.id}`);
-                                setLoad(false);
-                            }} className="hover:bg-slate-500 hover:opacity-20 rounded-lg">
-                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                                </svg>
-                            </button>
-                        </div>}
-                        <DifficultyMeter className="m-auto mx-4 size-7" value={value.difficulty} />
+        <div className="flex flex-wrap md:flex-nowrap w-screen h-fit">
+            {content && Object.values(content).map((value, index) => <div key={index} className="my-4 mx-auto md:mx-2 w-11/12 md:w-96">
+                <div className="w-full" key={index}>
+                    <div className="w-full h-8 bg-slate-700 rounded cursor-default">
+                        <p className="text-center text-2xl">Level: {Object.keys(content)[index]}</p>
                     </div>
-                </div>)}
-            </div>
-        </div>)}
+
+
+                    {value.map((value, index) => <div className="flex w-full bg-slate-800 h-16 rounded hover:bg-slate-500" key={index}>
+                        <a href={`/chapters/${chap}/${value.id}/`} className="flex w-full h-full">
+                            <div className="m-auto ml-4">
+                                <p>Upg. {value.number}</p>
+                            </div>
+                        </a>
+                        <div className="m-auto h-full max-w-[8rem] w-fit justify-self-right flex">
+                            {auth && <div className="m-auto ml-4">
+                                <button onClick={async () => {
+                                    setLoad(true);
+                                    router.push(`/chapters/editor/${value.id}`);
+                                    setLoad(false);
+                                }} className="hover:bg-slate-500 hover:opacity-20 rounded-lg">
+                                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                    </svg>
+                                </button>
+                            </div>}
+                            <DifficultyMeter className="m-auto mx-4 size-7" value={value.difficulty} />
+                        </div>
+                    </div>)}
+                </div>
+            </div>)}
+        </div>
     </div>);
 }
