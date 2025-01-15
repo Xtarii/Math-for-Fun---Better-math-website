@@ -66,7 +66,6 @@ export default function Question() : ReactElement {
                     <div className="md:hidden justify-start mx-2 my-2">
                         <Button onClick={() => setShowGeoGebra(prev => !prev)}>GeoGebra</Button>
                     </div>
-
                     <div className="flex m-auto mt-4">
                         <div className="absolute right-2 top-2 flex w-40">
                             <p className="m-auto ml-4">Upg. {content.identifier.number}</p>
@@ -120,19 +119,19 @@ export default function Question() : ReactElement {
                                             setLoad(false); // Stops Spinning Wheel
                                         });
                                     }} />
+                                    <div className="relative">
+                                        {message && <div className="absolute md:bottom-2 right-2 flex w-fit max-w-96 min-h-16 bg-sky-900 rounded border border-2xl hover:opacity-20">
+                                            <MathParagraph content={message} className="m-auto p-10 pl-8 pr-8" />
+                                        </div>}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="relative w-full h-full">
-                        {message && <div className="absolute md:bottom-2 right-2 flex w-fit max-w-96 min-h-16 bg-sky-900 rounded border border-2xl hover:opacity-20">
-                            <MathParagraph content={message} className="m-auto p-10 pl-8 pr-8" />
-                        </div>}
-                    </div>
                 </div>}
             </div>
             <div hidden={showGeoGebra} className="absolute md:sticky h-fit w-full md:w-2/5 top-6 md:top-0 end-0">
-                <GeoGebra className="h-screen w-full flex" width={window.innerWidth >= 768 ? window.innerWidth * 0.38 : window.innerWidth} height={window.innerWidth >= 768 ? window.innerHeight : window.innerHeight * 0.945} />
+                <GeoGebra className="h-full mt-[5rem] md:mt-4 w-full flex" width={window.innerWidth >= 768 ? window.innerWidth * 0.38 : window.innerWidth} height={window.innerWidth >= 768 ? window.innerHeight * 0.97 : window.innerHeight * 0.88} />
             </div>
         </div>}
 
