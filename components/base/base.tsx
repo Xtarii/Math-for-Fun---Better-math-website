@@ -16,7 +16,7 @@ import { Navigator } from '../navigation/navigation';
  * elements for layout components.
  */
 export default function Base({ children }: { children?: ReactNode }) : ReactElement {
-    return(<AppRouterCacheProvider options={{ enableCssLayer: true }}>
+    return(<AppRouterCacheProvider options={{ enableCssLayer: false }}>
         <Suspense fallback={<Loader/>}>
             <NextAppProvider
                 theme={Theme(useMediaQuery("(prefers-color-scheme: dark)"))}
