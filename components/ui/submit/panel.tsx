@@ -22,7 +22,14 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
     return(<div className="flex flex-wrap w-96 m-auto">
         <div className="w-full inline-flex justify-center">
             <Button
-                className="rounded-l-lg px-5 py-2.5 me-2 mb-2"
+                style={{
+                    borderTopLeftRadius: "0.5rem",
+                    borderBottomLeftRadius: "0.5rem",
+
+                    padding: "0.625rem 1.25rem",
+                    marginInlineEnd: "0.5rem",
+                    marginBottom: "0.5rem"
+                }}
                 variant="contained"
                 color="error"
 
@@ -35,13 +42,26 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9h13a5 5 0 0 1 0 10H7M3 9l4-4M3 9l4 4"/>
                 </svg>
             </Button>
-            <Button className="justify-center px-16 py-2.5 me-2 mb-2" variant="contained" color="info" onClick={props.onClick}>
+            <Button style={{
+                justifyContent: "center",
+                padding: "0.625rem 4rem",
+                marginInlineEnd: "0.5rem",
+                marginBottom: "0.5rem"
+
+            }} variant="contained" color="info" onClick={props.onClick}>
                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                 </svg>
             </Button>
             <Button
-                className="rounded-r-lg px-5 py-2.5 me-2 mb-2"
+                style={{
+                    borderTopRightRadius: "0.5rem",
+                    borderBottomRightRadius: "0.5rem",
+
+                    padding: "0.625rem 1.25rem",
+                    marginInlineEnd: "0.5rem",
+                    marginBottom: "0.5rem"
+                }}
                 variant="contained"
                 color="success"
 
