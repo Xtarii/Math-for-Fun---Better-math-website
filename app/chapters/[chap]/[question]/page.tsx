@@ -130,8 +130,8 @@ export default function Question() : ReactElement {
                     </div>
                 </div>}
             </div>
-            <div hidden={showGeoGebra} className="absolute md:sticky h-fit w-full md:w-2/5 top-6 md:top-0 end-0">
-                <GeoGebra className="h-full mt-[5rem] md:mt-4 w-full flex" width={window.innerWidth >= 768 ? window.innerWidth * 0.38 : window.innerWidth} height={window.innerWidth >= 768 ? window.innerHeight * 0.97 : window.innerHeight * 0.88} />
+            <div hidden={showGeoGebra} className="absolute md:sticky h-fit w-full md:w-2/5 mt-[5rem] md:mt-0 top-6 md:top-0 end-0">
+                <GeoGebra className="h-full md:mt-4 w-full flex" width={window.innerWidth >= 768 ? window.innerWidth * 0.38 : window.innerWidth} height={window.innerWidth >= 768 ? window.innerHeight * 0.97 : window.innerHeight * 0.88} />
             </div>
         </div>}
 
