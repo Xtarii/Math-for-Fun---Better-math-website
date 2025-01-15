@@ -1,3 +1,4 @@
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Navigation } from "@toolpad/core";
 
@@ -14,6 +15,14 @@ export const Navigator: Navigation = [
     {
         segment: "",
         title: "Hem",
-        icon: <DashboardIcon/>
-    }
+        icon: <DashboardIcon />
+    },
+    {
+        segment: "chapters",
+        title: "Kapitel",
+        icon: <MenuBookIcon />,
+        pattern: "chapters{/:chap}*"
+    },
+
+    // Account Pages
 ]

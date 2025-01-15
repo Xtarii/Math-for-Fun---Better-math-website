@@ -22,12 +22,12 @@ export default function Base({ children }: { children?: ReactNode }) : ReactElem
                 theme={Theme(useMediaQuery("(prefers-color-scheme: dark)"))}
                 navigation={Navigator}
                 branding={{
-                    logo: <div className="w-full h-full mr-4 flex"><img className="size-7 m-auto" src="logo.png" alt="MathSpire Logo" /></div>,
+                    logo: <div className="w-full h-full mr-4 flex"><img className="size-7 m-auto" src="/logo.png" alt="MathSpire Logo" /></div>,
                     title: "MathSpire",
                     homeUrl: "/"
                 }}
             >
-                <DashboardLayout>
+                <DashboardLayout defaultSidebarCollapsed>
                     {children}
                 </DashboardLayout>
             </NextAppProvider>
