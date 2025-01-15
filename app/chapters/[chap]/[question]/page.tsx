@@ -58,9 +58,9 @@ export default function Question() : ReactElement {
 
 
     // Question Content Page
-    return(<div className="min-h-screen">
+    return(<div className="h-full">
         {load && <Loader />}
-        {content && <div className="flex flex-wrap md:flex-nowrap w-screen h-fit">
+        {content && <div className="flex flex-wrap md:flex-nowrap w-full h-fit">
             <div className="w-full md:w-3/5 h-fit">
                 <div className="relative flex">
                     <div className="md:hidden justify-start mx-2 my-2">
