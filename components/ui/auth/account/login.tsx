@@ -1,8 +1,9 @@
 "use client"
-import { login } from "@/utils/supabase/account/auth";
+import { getUserProfile, login } from "@/utils/supabase/account/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ReactElement, useState } from "react";
 import Loader from "../../load/loader";
+import { useSession } from "@/components/hooks/user/session";
 
 /**
  * Login Element for Supabase Authentication
@@ -16,6 +17,7 @@ import Loader from "../../load/loader";
 export default function Login({ className } : { className?: string }) : ReactElement {
     const router = useRouter();
     const params = useSearchParams();
+    const [ session, setSession ] = useSession();
 
     // Search Params for login
     const redirect = params.get("redirect");
@@ -35,13 +37,20 @@ export default function Login({ className } : { className?: string }) : ReactEle
 
         // Login to the account
         const user = await login(email, password);
-        if(!user) {
+        const userData = await getUserProfile();
+        if(!user || !userData) {
             setError("Could not complete login");
             setLoad(false);
             return;
         }
 
         // Redirect to redirect or account as default
+        setSession({
+            user: {
+                name: userData.username,
+                email: userData.email
+            }
+        });
         router.push(redirect || "/account");
     }
 
@@ -53,7 +62,7 @@ export default function Login({ className } : { className?: string }) : ReactEle
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    Sign in to your account
+                    Logga in till ditt konto
                 </h1>
                 <form action={handleLogin} className="space-y-4 md:space-y-6">
                     <div>
