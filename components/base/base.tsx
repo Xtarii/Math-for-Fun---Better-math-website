@@ -45,7 +45,7 @@ export default function Base({ children }: { children?: ReactNode }) : ReactElem
             setSession({
                 user: {
                     name: userData.username,
-                    email: userData.email
+                    email: userData.email,
                 }
             })
         })()
@@ -60,7 +60,7 @@ export default function Base({ children }: { children?: ReactNode }) : ReactElem
                 theme={getTheme()}
                 navigation={Navigator}
                 branding={{
-                    logo: <div className="w-full h-full mr-4 flex"><img className="size-7 m-auto" src="/logo.png" alt="MathSpire Logo" /></div>,
+                    logo: <div className="w-full h-full flex"><img className="size-8 m-auto" src="/logo.png" alt="MathSpire Logo" /></div>,
                     title: "MathSpire",
                     homeUrl: "/"
                 }}
