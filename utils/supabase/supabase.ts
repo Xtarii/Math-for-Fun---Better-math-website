@@ -28,6 +28,11 @@ export const tables = {
      * Chapters table
      */
     chapters: "Chapters",
+
+    /**
+     * Account table
+     */
+    account: "Profiles",
 }
 
 /**
