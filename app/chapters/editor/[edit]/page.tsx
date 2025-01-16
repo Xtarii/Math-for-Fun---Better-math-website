@@ -106,11 +106,11 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
 
 
     // Editor Page
-    return(<div className="w-full h-fit min-h-screen">
+    return(<div className="w-full h-fit">
         {load && <Loader />}
         <LoginVerifier redirect="this" />
         <DeviceSupport className="w-full h-fit">
-            {!load && <div className="hidden w-screen h-fit md:flex">
+            {!load && <div className="hidden w-full h-fit md:flex">
                 <form className="m-auto flex flex-wrap w-full h-fit" onSubmit={handleSubmit}>
                     {/* Required inputs */}
                     <div className="w-fit h-fit mx-auto">

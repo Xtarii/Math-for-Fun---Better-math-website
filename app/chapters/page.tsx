@@ -21,7 +21,7 @@ export default function Chapters() : ReactElement {
 
 
 
-    return (<div className="min-h-screen">
+    return (<div className="h-full">
         {load && <Loader />}
 
         {/* Page Content */}

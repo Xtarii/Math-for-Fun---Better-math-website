@@ -7,8 +7,10 @@ export default function Editor() : ReactElement {
     return(<div>
         <LoginVerifier redirect="this" />
 
-        <div className="flex w-screen h-fit min-h-96">
-            <Button className="m-auto" variant="outlined" href="/chapters/editor/new">Ny Uppgift</Button>
+        <div className="flex w-full h-full min-h-96">
+            <Button style={{
+                margin: "auto"
+            }} variant="outlined" href="/chapters/editor/new">Ny Uppgift</Button>
         </div>
     </div>);
 }
