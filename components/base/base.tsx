@@ -24,24 +24,9 @@ export default function Base({ children }: { children?: ReactNode }) : ReactElem
 
 
     // Auth
-    // const [ session, setSession ] = useState<Session | null>();
     const authentication = useMemo(() => {
         return{
-            signIn: async () => {
-                // const user = await getUser();
-                // const userData = await getUserProfile();
-                // if(!user || !userData) return;
-
-                // // Sets User
-                // setSession({
-                //     user: {
-                //         name: userData.username,
-                //         email: userData.email
-                //     }
-                // })
-
-                router.push("account/login");
-            },
+            signIn: () => router.push("account/login"),
             signOut: async () => {
                 await logOut();
                 setSession(null);
