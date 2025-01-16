@@ -1,5 +1,6 @@
 import { AuthError, User } from "@supabase/supabase-js";
-import { client } from "../supabase";
+import { client, tables } from "../supabase";
+import { AccountType } from "../types/types";
 
 /**
  * Gets User data
@@ -14,6 +15,20 @@ import { client } from "../supabase";
 export async function getUser() : Promise<User | null> {
     const res = await client.auth.getUser();
     return res.data.user; // Returns only the user data
+}
+
+/**
+ * Get User Profile Data
+ *
+ * @returns Account / Profile Data
+ */
+export async function getUserProfile() : Promise<AccountType | null> {
+    const { data, error } = await client.from(tables.account).select("*");
+    if(error) console.error(error);
+
+    // Converts Data, the user only has one account so item 0 of list is user
+    const converted: AccountType | null = data ? data[0] : null;
+    return converted;
 }
 
 
@@ -95,7 +110,7 @@ export async function resendVerification(email: string) {
  * Attempts to sign out of the user session
  *
  * ```local``` scope is this device - to
- * logout others or all users ```scope```
+ * logout others or all users, the ```scope```
  * should be set to ```global``` or ```others```
  *
  * ```ts
