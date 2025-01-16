@@ -34,7 +34,7 @@ export default function Chapters() : ReactElement {
 
 
         <LoginVerifier className="m-auto">
-            <Button variant="outlined" href="/chapters/editor">Editeraren</Button>
+            <Button variant="outlined" href="/editor">Editeraren</Button>
         </LoginVerifier>
     </div>);
 }

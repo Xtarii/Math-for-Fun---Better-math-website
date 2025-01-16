@@ -10,7 +10,7 @@ export default function Editor() : ReactElement {
         <div className="flex w-full h-full min-h-96">
             <Button style={{
                 margin: "auto"
-            }} variant="outlined" href="/chapters/editor/new">Ny Uppgift</Button>
+            }} variant="outlined" href="/editor/new">Ny Uppgift</Button>
         </div>
     </div>);
 }

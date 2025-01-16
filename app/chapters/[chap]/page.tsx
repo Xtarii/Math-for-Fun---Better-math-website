@@ -70,7 +70,7 @@ export default function Content() : ReactElement {
                             {auth && <div className="m-auto ml-4">
                                 <button onClick={async () => {
                                     setLoad(true);
-                                    router.push(`/chapters/editor/${value.id}`);
+                                    router.push(`/editor/${value.id}`);
                                     setLoad(false);
                                 }} className="hover:bg-slate-500 hover:opacity-20 rounded-lg">
                                     <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
