@@ -86,7 +86,7 @@ export default function Question() : ReactElement {
                         </div>
                         <div className="md:justify-end m-auto md:mx-4 my-12 z-10">
                             <div className="relative w-fit h-fit m-auto md:mt-4">
-                                {content.image && <img className="border-2 border-slate-500 w-96 max-h-96 rounded shadow-md hover:scale-[2.3] hover:transform hover:-translate-x-1/2 hover:translate-y-2/4 transition-all duration-500 ease-in-out" src={content.image} alt={content.image} />}
+                                {content.image && <img className="border-2 border-slate-500 w-96 max-h-96 rounded shadow-md md:hover:scale-[2.3] md:hover:transform md:hover:-translate-x-1/2 md:hover:translate-y-2/4 transition-all duration-500 ease-in-out" src={content.image} alt={content.image} />}
                             </div>
                         </div>
                     </div>
