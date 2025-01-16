@@ -40,6 +40,6 @@ export const Navigator: Navigation = [
         segment: "editor",
         title: "Editerare",
         icon: <EditNoteIcon />,
-        pattern: "/editor{/:edit}*"
+        pattern: "editor{/:edit}*"
     },
 ]
