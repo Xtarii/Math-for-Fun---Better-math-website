@@ -1,4 +1,31 @@
 /**
+ * Account Type
+ *
+ * This is not the Supabase User type.
+ * This type is for profile data that
+ * is stored in the profile database.
+ */
+export type AccountType = {
+    /**
+     * User ID, this will match the Auth.ID
+     * for the user.
+     */
+    id: string
+
+    /**
+     * User Email Address
+     */
+    email: string
+
+    /**
+     * Username
+     */
+    username: string
+}
+
+
+
+/**
  * Chapter Type
  */
 export type ChapterType = {
@@ -45,6 +72,9 @@ export type QuestionIdentifierType = {
 
 
 
+/**
+ * Question Type
+ */
 export type QuestionType = {
     /**
      * Question Identifier

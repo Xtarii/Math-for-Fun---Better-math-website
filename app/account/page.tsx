@@ -1,4 +1,5 @@
 "use client"
+import { useSession } from "@/components/hooks/user/session";
 import MessageBox from "@/components/ui/forms/messages/messageBox";
 import Loader from "@/components/ui/load/loader";
 import ThemeSelector from "@/components/ui/theme/themeSelector";
@@ -12,6 +13,8 @@ export default function Account() : ReactElement {
     const router = useRouter();
     const [ load, setLoad ] = useState<boolean>(true);
     const [ user, setUser ] = useState<User>();
+    const [ session, setSession ] = useSession();
+
     const [ error, setError ] = useState<boolean>(false);
 
     const [ isClient, setIsClient ] = useState<boolean>(false);
@@ -36,7 +39,7 @@ export default function Account() : ReactElement {
 
 
         setIsClient(true); // Client test
-    }, [])
+    }, [session])
 
 
 
@@ -56,8 +59,8 @@ export default function Account() : ReactElement {
 
 
         {/* Page content */}
-        <div className="w-screen h-screen flex flex-wrap">
-            <h1>Welcome user : {user?.email}</h1>
+        <div className="w-full h-full flex flex-wrap">
+            <h1>Välkommen : {session?.user?.name}</h1>
 
 
 
@@ -65,8 +68,11 @@ export default function Account() : ReactElement {
                 <div className="mr-2">
                     <Button variant="outlined" color="warning" onClick={async () => {
                         setLoad(true);
+
                         await signOut();
+                        setSession(null);
                         router.push("/account/login");
+
                         setLoad(false);
                     }}>Sign Out</Button>
                 </div>
@@ -89,6 +95,7 @@ export default function Account() : ReactElement {
                         })).json();
                         if(response.message === "success") {
                             await signOut("global");
+                            setSession(null);
                             router.push("/account/login");
                         }
                         setError(true);

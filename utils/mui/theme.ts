@@ -7,12 +7,10 @@ import { teal } from "@mui/material/colors";
  * @param dark Dark Theme
  * @returns Theme
  */
-export function Theme(dark: boolean) : T {
+export function getTheme() : T {
     return createTheme({
         defaultColorScheme: "dark",
-        colorSchemes: {
-            dark
-        },
+        colorSchemes: { dark: true, light: true },
 
         // Color Configuration
         palette: {

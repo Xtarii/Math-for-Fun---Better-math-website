@@ -21,7 +21,7 @@ export default function Chapters() : ReactElement {
 
 
 
-    return (<div className="min-h-screen">
+    return (<div className="h-full">
         {load && <Loader />}
 
         {/* Page Content */}
@@ -34,7 +34,7 @@ export default function Chapters() : ReactElement {
 
 
         <LoginVerifier className="m-auto">
-            <Button variant="outlined" href="/chapters/editor">Editeraren</Button>
+            <Button variant="outlined" href="/editor">Editeraren</Button>
         </LoginVerifier>
     </div>);
 }
