@@ -25,7 +25,7 @@ export default function Account() : ReactElement {
     useEffect(() => {
         (async () => {
             const user = await getUser();
-            if(!user || !session) {
+            if(!user) {
                 router.push("/account/login"); // Redirects to login
                 setLoad(false);
                 return;
