@@ -55,16 +55,15 @@ export default function Content() : ReactElement {
         <div className="flex flex-wrap md:flex-nowrap w-full h-fit">
             {content && Object.values(content).map((value, index) => <div key={index} className="my-4 mx-auto md:mx-2 w-11/12 md:w-96">
                 <div className="w-full" key={index}>
-                    <div className="w-full h-8 bg-slate-700 rounded cursor-default">
-                        <p className="text-center text-2xl">Level: {Object.keys(content)[index]}</p>
+                    <div className="w-full h-8 bg-slate-700 rounded-t-lg cursor-default flex">
+                        <p className="text-left text-base m-auto ml-4">Uppgift</p>
+                        <p className="text-right text-sm pr-[0.75rem] pt-2">Level</p>
                     </div>
 
 
                     {value.map((value, index) => <div className="flex w-full bg-slate-800 h-16 rounded hover:bg-slate-500" key={index}>
                         <a href={`/chapters/${chap}/${value.id}/`} className="flex w-full h-full">
-                            <div className="m-auto ml-4">
-                                <p>Upg. {value.number}</p>
-                            </div>
+                            <div className="m-auto ml-4"><p>{value.number}</p></div>
                         </a>
                         <div className="m-auto h-full max-w-[8rem] w-fit justify-self-right flex">
                             {auth && <div className="m-auto ml-4">

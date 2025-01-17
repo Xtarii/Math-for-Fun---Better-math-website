@@ -58,13 +58,13 @@ export default function Question() : ReactElement {
 
 
     // Question Content Page
-    return(<div className="h-full">
+    return(<div className="w-full h-full flex-[1]">
         {load && <Loader />}
         {content && <div className="flex flex-wrap md:flex-nowrap w-full h-fit">
             <div className="w-full md:w-3/5 h-fit">
                 <div className="relative flex">
                     <div className="md:hidden justify-start mx-2 my-2">
-                        <Button onClick={() => setShowGeoGebra(prev => !prev)}>GeoGebra</Button>
+                        <Button variant={!showGeoGebra ? "contained" : "text"} onClick={() => setShowGeoGebra(prev => !prev)}>GeoGebra</Button>
                     </div>
                     <div className="flex m-auto mt-4">
                         <div className="absolute right-2 top-2 flex w-40">
