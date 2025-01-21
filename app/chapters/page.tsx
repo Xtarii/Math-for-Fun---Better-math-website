@@ -5,6 +5,7 @@ import { getChapters } from "@/utils/supabase/database/database";
 import { ChapterType } from "@/utils/supabase/types/types";
 import { Button } from "@mui/material";
 import { ReactElement, useEffect, useState } from "react";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 export default function Chapters() : ReactElement {
     const [ load, setLoad ] = useState(true);
@@ -36,6 +37,11 @@ export default function Chapters() : ReactElement {
 
     return (<div className="h-full">
         {load && <Loader />}
+        <div className="w-full mt-2 block md:hidden">
+            <Button variant="text" href="/" color="info">
+                <ChevronLeftIcon />
+            </Button>
+        </div>
         <LoginVerifier className="m-auto hidden md:block w-full h-fit">
             <div className="ml-10 mt-2 w-fit h-fit">
                 <Button variant="outlined" href="/editor">Editeraren</Button>

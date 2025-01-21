@@ -7,6 +7,8 @@ import { QuestionIdentifierType } from "@/utils/supabase/types/types";
 import { getQuestionsOfChapter } from "@/utils/supabase/database/database";
 import Loader from "@/components/ui/load/loader";
 import DifficultyMeter from "@/components/ui/meter/difficultyMeter";
+import { Button } from "@mui/material";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 export default function Content() : ReactElement {
     const router = useRouter();
@@ -52,6 +54,11 @@ export default function Content() : ReactElement {
     // Chapter Content Page
     return(<div className="h-full">
         {load && <Loader />}
+        <div className="w-full mt-2">
+            <Button variant="text" href="/chapters" color="info">
+                <ChevronLeftIcon />
+            </Button>
+        </div>
         <div className="flex flex-wrap md:flex-nowrap w-full h-fit">
             {content && Object.values(content).map((value, index) => <div key={index} className="my-4 mx-auto md:mx-2 w-11/12 md:w-96">
                 <div className="w-full" key={index}>
