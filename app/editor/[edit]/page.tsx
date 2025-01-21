@@ -183,7 +183,7 @@ export default function Edit({params} : { params: Promise<{ edit: "new" | string
                         >
                             <div className="flex">
                                 <Button href="/chapters" color="info" className="mr-2" variant="outlined">Back</Button>
-                                <Button href="/chapters/editor/new" color="inherit">New</Button>
+                                <Button href="/editor/new" color="inherit">New</Button>
                             </div>
                         </MessageBox>}
 
