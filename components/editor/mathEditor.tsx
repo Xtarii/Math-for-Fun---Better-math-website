@@ -60,7 +60,7 @@ export default function MathEditor(props: { className?: string, onChange?: (arg:
     return(<div className={props.className}>
         {!props.readonly && <MathEditorMenu editor={editor} />}
 
-        <div className="w-full h-full shadow-md">
+        <div className="w-full h-5/6 shadow-md">
             {client && <EditorContent className="bg-white dark:bg-slate-800 shadow-md w-full h-full rounded-b-lg" editor={editor} />}
             {!client && <div className="bg-white dark:bg-slate-800 shadow-md w-full h-full rounded-b-lg flex"><LocalLoader /></div>}
         </div>
