@@ -1,19 +1,26 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { InputFormat, OutputFormat, schema } from "./types/types";
+import { GoogleGenerativeAI, ResponseSchema } from "@google/generative-ai";
+import { correction, InputFormat, OutputFormat, schema } from "./types/types";
 import { Flags } from "./flags/flags";
 
 
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_TOKEN || "");
+
 /**
- * Model Instance
+ * Gets Gemini Model Object
+ *
+ * @param schema Model Response Schema
+ * @param model Model Type
+ * @returns Model Object
  */
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash",
-    generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema: schema
-    },
-});
+const getModel = (schema: ResponseSchema, model: string = "gemini-2.0-flash-exp") => {
+    return genAI.getGenerativeModel({ model,
+        generationConfig: {
+            responseMimeType: "application/json",
+            responseSchema: schema
+        },
+    });
+}
 
 
 
@@ -31,7 +38,19 @@ export async function generateFeedback(prompt: InputFormat) : Promise<OutputForm
     if(prompt.system.flags) for(const flag of prompt.system.flags) flags.push(flag);
     prompt.system.flags = flags; // Overrides flags
 
+
+
+    // First AI correction check on the answer
+    const correct: boolean = (await getModel(correction).generateContent(JSON.stringify({
+        flags: prompt.system.flags,
+        answer: prompt.system.answer,
+        user: prompt.user
+    }))).response.text() === "true";
+
     // Sends Prompt to Gemini API and returns the text
-    const result = await model.generateContent(JSON.stringify(prompt));
+    const result = await getModel(schema).generateContent(JSON.stringify({
+        isCorrect: correct,
+        prompt: prompt
+    }));
     return JSON.parse(result.response.text());
 }
