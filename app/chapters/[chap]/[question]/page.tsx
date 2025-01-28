@@ -93,7 +93,7 @@ export default function Question() : ReactElement {
                     <div className="w-full h-fit">
                         <div className="flex flex-wrap w-full h-fit">
                             <div className="relative w-full h-fit">
-                                <div className="h-fit mb-20">
+                                <div className="h-fit">
                                     <MathEditor className="w-full h-[20rem] md:h-[35rem]" onChange={setText} default={text} />
                                 </div>
                                 <div className="sticky w-full h-40 bg-slate-800 m-auto flex bottom-0">
