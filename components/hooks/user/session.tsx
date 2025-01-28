@@ -43,9 +43,10 @@ export function SessionProvider({ children }: { children?: ReactNode }) : ReactE
     // Handles Auto sign in
     useEffect(() => {
         (async() => {
+            if(session) return; // Returns if there is an session
             const user = await getUser();
             const userData = await getUserProfile();
-            if(!user || !userData || session) return; // Returns if there is no account found
+            if(!user || !userData) return; // Returns if there is no account found
 
             // Sets User
             setSession({
