@@ -1,12 +1,12 @@
 "use client"
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { ReactElement, ReactNode, Suspense, useEffect, useMemo, useState } from "react";
+import { ReactElement, ReactNode, Suspense, useMemo } from "react";
 import Loader from '../ui/load/loader';
 import { NextAppProvider } from '@toolpad/core/nextjs';
 import { getTheme } from '@/utils/mui/theme';
 import { DashboardLayout } from '@toolpad/core';
 import { Navigator } from '../navigation/navigation';
-import { getUser, getUserProfile, signOut as logOut } from '@/utils/supabase/account/auth';
+import { signOut as logOut } from '@/utils/supabase/account/auth';
 import { useRouter } from 'next/navigation';
 import { useSession } from '../hooks/user/session';
 
@@ -32,23 +32,6 @@ export default function Base({ children }: { children?: ReactNode }) : ReactElem
                 setSession(null);
             }
         }
-    }, [])
-
-    // Handles Auto sign ins
-    useEffect(() => {
-        (async() => {
-            const user = await getUser();
-            const userData = await getUserProfile();
-            if(!user || !userData) return;
-
-            // Sets User
-            setSession({
-                user: {
-                    name: userData.username,
-                    email: userData.email,
-                }
-            })
-        })()
     }, [])
 
 
