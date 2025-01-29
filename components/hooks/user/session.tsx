@@ -1,7 +1,6 @@
 "use client"
-import { getUser, getUserProfile } from "@/utils/supabase/account/auth";
 import { Session } from "@toolpad/core";
-import { createContext, ReactElement, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactElement, ReactNode, useContext, useState } from "react";
 
 /**
  * Session Context
@@ -39,24 +38,5 @@ export function useSession() : [ session: Session | null, setSession: (value: Se
  */
 export function SessionProvider({ children }: { children?: ReactNode }) : ReactElement {
     const [ session, setSession ] = useState<Session | null>(null);
-
-    // Handles Auto sign in
-    useEffect(() => {
-        (async() => {
-            if(session) return; // Returns if there is an session
-            const user = await getUser();
-            const userData = await getUserProfile();
-            if(!user || !userData) return; // Returns if there is no account found
-
-            // Sets User
-            setSession({
-                user: {
-                    name: userData.username,
-                    email: userData.email,
-                }
-            })
-        })()
-    }, [])
-
     return(<SessionContext.Provider value={[session, setSession]}>{children}</SessionContext.Provider>);
 }
