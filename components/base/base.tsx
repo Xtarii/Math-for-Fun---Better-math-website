@@ -39,7 +39,7 @@ export default function Base({ children }: { children?: ReactNode }) : ReactElem
     // Handles Auto sign in
     useEffect(() => {
         (async() => {
-            if(session) return; // Returns if there is an session
+            // if(session) return; // Returns if there is an session
             const user = await getUser();
             const userData = await getUserProfile();
             if(!user || !userData) return; // Returns if there is no account found
