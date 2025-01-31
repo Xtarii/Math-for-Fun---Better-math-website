@@ -99,7 +99,7 @@ export default function LoginVerifier({ children, className, loader, redirect }:
     // Login Verifier
     useEffect(() => {
         (async () => {
-            if(!session && !children) {
+            if(!(await getUser()) && !children) { // Uses get user to get more predictable result
                 router.push("/account/login" + urlRedirect);
                 return;
             }
