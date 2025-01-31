@@ -9,6 +9,7 @@ import { Navigator } from '../navigation/navigation';
 import { getUser, getUserProfile, signOut as logOut } from '@/utils/supabase/account/auth';
 import { useRouter } from 'next/navigation';
 import { useSession } from '../hooks/user/session';
+import { dashboardSlots } from '../navigation/slots';
 
 /**
  * Base Element
@@ -49,6 +50,7 @@ export default function Base({ children }: { children?: ReactNode }) : ReactElem
                 user: {
                     name: userData.username,
                     email: userData.email,
+                    id: user.id,
                 }
             })
         })()
@@ -71,7 +73,7 @@ export default function Base({ children }: { children?: ReactNode }) : ReactElem
                 session={session}
                 authentication={authentication}
             >
-                <DashboardLayout defaultSidebarCollapsed>
+                <DashboardLayout slots={dashboardSlots} defaultSidebarCollapsed>
                     {children}
                 </DashboardLayout>
             </NextAppProvider>

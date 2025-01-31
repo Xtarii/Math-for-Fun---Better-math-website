@@ -48,7 +48,8 @@ export default function Login({ className } : { className?: string }) : ReactEle
         setSession({
             user: {
                 name: userData.username,
-                email: userData.email
+                email: userData.email,
+                id: user.id
             }
         });
         router.push(redirect || "/account");

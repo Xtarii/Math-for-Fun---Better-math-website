@@ -3,6 +3,7 @@ import { getUser } from "@/utils/supabase/account/auth";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import Loader from "../ui/load/loader";
+import { useSession } from "../hooks/user/session";
 
 /**
  * Login Verifier Element
@@ -91,31 +92,27 @@ export default function LoginVerifier({ children, className, loader, redirect }:
 export default function LoginVerifier({ children, className, loader, redirect }: { children?: ReactNode, className?: string, loader?: boolean, redirect?: "this" | string }) : ReactElement {
     const router = useRouter();
     const [ load, setLoad ] = useState<boolean>(loader || false);
-    const [ isLoggedIn,  setIsLoggedIn ] = useState<boolean>(false);
+    const [ session, setSession ] = useSession();
     const urlRedirect = redirect ? "?redirect=" + (redirect === "this" ? usePathname() : redirect) : "";
 
 
     // Login Verifier
     useEffect(() => {
         (async () => {
-            const user = await getUser();
-
-            // Handle Login
-            setIsLoggedIn(user !== null);
-            if(!user && !children) {
+            if(!session && !children) {
                 router.push("/account/login" + urlRedirect);
                 return;
             }
             setLoad(false);
         })()
-    }, [isLoggedIn])
+    }, [session])
 
 
 
     // Content
     if(children) return(<div className={className}>
         {load && <Loader />}
-        {(isLoggedIn && !load) && children}
+        {(session && !load) && children}
     </div>);
     return(<div className={className}>{load && <Loader />}</div>);
 }

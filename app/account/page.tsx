@@ -1,51 +1,21 @@
 "use client"
+import LoginVerifier from "@/components/auth/loginVerifier";
 import { useSession } from "@/components/hooks/user/session";
 import MessageBox from "@/components/ui/forms/messages/messageBox";
-import Loader from "@/components/ui/load/loader";
-import ThemeSelector from "@/components/ui/theme/themeSelector";
-import { getUser, signOut } from "@/utils/supabase/account/auth";
 import { Button } from "@mui/material";
-import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 
 export default function Account() : ReactElement {
     const router = useRouter();
-    const [ load, setLoad ] = useState<boolean>(true);
-    const [ user, setUser ] = useState<User>();
     const [ session, setSession ] = useSession();
-
     const [ error, setError ] = useState<boolean>(false);
-
-    const [ isClient, setIsClient ] = useState<boolean>(false);
-
-
-
-    // Account Data
-    useEffect(() => {
-        (async () => {
-            const user = await getUser();
-            if(!user) {
-                router.push("/account/login"); // Redirects to login
-                setLoad(false);
-                return;
-            }
-
-            // Sets user data
-            setUser(user);
-            setLoad(false);
-        })()
-
-
-
-        setIsClient(true); // Client test
-    }, [session])
 
 
 
     // Page Content
     return(<div>
-        {load && <Loader />}
+        <LoginVerifier />
         {error && <MessageBox
             className="relative bg-white rounded-lg shadow dark:bg-gray-700"
             title="Invalid Request"
@@ -61,55 +31,6 @@ export default function Account() : ReactElement {
         {/* Page content */}
         <div className="w-full h-full flex flex-wrap">
             <h1>Välkommen : {session?.user?.name}</h1>
-
-
-
-            <div className="w-full mx-4 flex">
-                <div className="mr-2">
-                    <Button variant="outlined" color="warning" onClick={async () => {
-                        setLoad(true);
-
-                        await signOut();
-                        setSession(null);
-                        router.push("/account/login");
-
-                        setLoad(false);
-                    }}>Sign Out</Button>
-                </div>
-                <div className="ml-2">
-                    <Button variant="contained" color="error" onClick={async (e) => {
-                        e.preventDefault();
-                        if(!user) {
-                            setError(true);
-                            return;
-                        }
-                        setLoad(true);
-
-                        // Deletes user
-                        const response: { message: "success" | "error" } = await (await fetch('/api/account', {
-                            method: 'DELETE',
-                            headers: {
-                            'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ id: user.id }),
-                        })).json();
-                        if(response.message === "success") {
-                            await signOut("global");
-                            setSession(null);
-                            router.push("/account/login");
-                        }
-                        setError(true);
-                        setLoad(false);
-                    }}>Delete Account</Button>
-                </div>
-            </div>
         </div>
-
-
-
-
-
-        {/* Theme TEST */}
-        {isClient && <ThemeSelector className="" />}
     </div>);
 }
