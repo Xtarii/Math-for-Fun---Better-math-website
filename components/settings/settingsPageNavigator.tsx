@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode } from "react";
-import ThemePage from "./pages/Theme";
+import ThemePage from "./pages/theme";
 import AccountPage from "./pages/account";
 
 /**
