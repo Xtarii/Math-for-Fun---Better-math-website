@@ -98,7 +98,7 @@ export default function SubmitPanel(props: {status: number, onClick?: (event: Mo
                     </svg>
                 </Button>
             </div>
-            <ScoreMeter className="max-w-screen w-96 h-2.5 m-auto" value={props.status} />
+            <ScoreMeter className="w-full md:w-96 h-2.5 m-auto" value={props.status} />
         </div>
         <div className="absolute end-0 md:end-2">
             <div className="me-0 md:me-2 mb-2 mr-0 md:mr-2">
